@@ -15,11 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
-            "outputPath": "dist/faucet",
+            "outputPath": "dist",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -95,8 +95,22 @@
             ],
             "scripts": []
           }
-        }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+              "name": "miladsoft",
+              "email": "miladsoft@yahoo.com",
+              "baseHref": "/",
+              "dir": "dist",
+              "repo": "https://github.com/block-core/bitcoin-custom-signet.git",
+              "cname": "faucet.angor.io"
+          }
+      }
       }
     }
+  },
+  "cli": {
+    "analytics": "c502ff29-4ab4-4e19-a437-7d3ad2f639a0"
   }
 }
