@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { AboutComponent } from './components/about/about.component';
 import { HelpComponent } from './components/help/help.component';
 import { HomeComponent } from './components/home/home.component';
+import { ClaimComponent } from './components/claim/claim.component';
 
 
 export const routes: Routes = [
@@ -14,6 +15,7 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'help', component: HelpComponent },
+      { path: 'claim', component: ClaimComponent },
     ],
   },
   { path: '**', redirectTo: '' },

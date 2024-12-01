@@ -14,10 +14,21 @@
     padding: 0 1rem;
   }
 
-  .logo {
+  .logo a {
     font-size: 1.5rem;
     font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
   }
+
+  .logo a:visited,
+  .logo a:hover,
+  .logo a:active,
+  .logo a:focus {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
 
   .nav-links {
     list-style: none;
