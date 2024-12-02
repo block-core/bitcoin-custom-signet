@@ -57,8 +57,8 @@ services:
       BLOCKPRODUCTIONDELAY: ${BLOCKPRODUCTIONDELAY:-30}
       MINERENABLED: ${MINERENABLED:-0} # change this to 1 if this node needs to mine (however for simplicity there should only be one mining node per challenge)
       NBITS: $NBITS
-      MINETO: ${MINETO:-tb1qf8lwlrqxy682rlr7ca950478a2lu6z9xzccf30}
-      PRIVKEY: ${PRIVKEY:-cNDhpWanXGyCed6U7eBNqRN3EyB7mEUbqm19tA7z5ho6BiNaPfmy} # private key path is m/84'/1'/0'/0/0 of test wallet
+      MINETO: ${MINETO:-tb1qk4pq0rh75qtph47wlufhyss43flhvhvwe4zt8a} # miner private key path is m/84'/1'/0'/0/0 of test wallet wallet "radio diamond leg loud street announce guitar video shiver speed eyebrow"
+      PRIVKEY: ${PRIVKEY:-cNDhpWanXGyCed6U7eBNqRN3EyB7mEUbqm19tA7z5ho6BiNaPfmy} 
       SIGNETCHALLENGE: ${SIGNETCHALLENGE:-512102a3f8184701a033e5f8faa295647374b0bbc868082240d6e7ad8e9ecb0d86e6d451ae}
       EXTERNAL_IP: $EXTERNAL_IP
       RPCUSER: ${RPCUSER:-rpcuser}
