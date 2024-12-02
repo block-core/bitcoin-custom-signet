@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\faucet-api.props" />
+</Project>

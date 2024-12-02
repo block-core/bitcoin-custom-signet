@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "OSRtpa+qRhc93QG/Q9IZadJkOJpcjdt8+OZh2XQFw4g=",
+  "Source": "faucet-api",
+  "BasePath": "_content/faucet-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
