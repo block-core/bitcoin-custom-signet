@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GRARjVyULqjesHg4Ukj0R4d5/jVIwwpHreEGLxnvuWI+mEiziMJSCX+2hysrbNJ6ke2VzhA5lZLUUQrDPpDmSA==",
+  "dgSpecHash": "d+HTkvBtXYw=",
   "success": true,
   "projectFilePath": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
   "expectedPackageFiles": [
