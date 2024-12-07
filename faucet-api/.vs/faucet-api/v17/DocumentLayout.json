@@ -3,72 +3,16 @@
   "WorkspaceRootPath": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\controllers\\faucetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:controllers\\faucetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\services\\indexerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:services\\indexerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\addressbalance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\addressbalance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\outpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\outpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\querytransactioninput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\querytransactioninput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\querytransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\querytransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\feeestimations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\feeestimations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\querytransactionoutput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\querytransactionoutput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\addressinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\addressinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\bitcoinsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\bitcoinsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\utxodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\utxodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\models\\feeestimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:models\\feeestimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:faucet-api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:faucet-api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,85 +30,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "QueryTransactionInput.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransactionInput.cs",
-              "RelativeDocumentMoniker": "Models\\QueryTransactionInput.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransactionInput.cs",
-              "RelativeToolTip": "Models\\QueryTransactionInput.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T08:07:06.214Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AddressBalance.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\AddressBalance.cs",
-              "RelativeDocumentMoniker": "Models\\AddressBalance.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\AddressBalance.cs",
-              "RelativeToolTip": "Models\\AddressBalance.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:10:16.623Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Outpoint.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\Outpoint.cs",
-              "RelativeDocumentMoniker": "Models\\Outpoint.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\Outpoint.cs",
-              "RelativeToolTip": "Models\\Outpoint.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:31:37.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "FeeEstimations.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\FeeEstimations.cs",
-              "RelativeDocumentMoniker": "Models\\FeeEstimations.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\FeeEstimations.cs",
-              "RelativeToolTip": "Models\\FeeEstimations.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:10:33.512Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IndexerService.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Services\\IndexerService.cs",
-              "RelativeDocumentMoniker": "Services\\IndexerService.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Services\\IndexerService.cs",
-              "RelativeToolTip": "Services\\IndexerService.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAAABsAAAB+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:46:29.476Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FaucetController.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Controllers\\FaucetController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FaucetController.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Controllers\\FaucetController.cs",
-              "RelativeToolTip": "Controllers\\FaucetController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAUwB0AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T05:12:19.258Z",
+              "Title": "Dockerfile",
+              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-07T11:49:11.298Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwCcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T11:31:39.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -173,135 +65,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-07T03:31:57.471Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "QueryTransaction.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransaction.cs",
-              "RelativeDocumentMoniker": "Models\\QueryTransaction.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransaction.cs",
-              "RelativeToolTip": "Models\\QueryTransaction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T08:07:46.077Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AddressInfo.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\AddressInfo.cs",
-              "RelativeDocumentMoniker": "Models\\AddressInfo.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\AddressInfo.cs",
-              "RelativeToolTip": "Models\\AddressInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T08:06:31.054Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BitcoinSettings.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\BitcoinSettings.cs",
-              "RelativeDocumentMoniker": "Models\\BitcoinSettings.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\BitcoinSettings.cs",
-              "RelativeToolTip": "Models\\BitcoinSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T08:04:48.969Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "QueryTransactionOutput.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransactionOutput.cs",
-              "RelativeDocumentMoniker": "Models\\QueryTransactionOutput.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\QueryTransactionOutput.cs",
-              "RelativeToolTip": "Models\\QueryTransactionOutput.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:30:46.764Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "UtxoData.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\UtxoData.cs",
-              "RelativeDocumentMoniker": "Models\\UtxoData.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\UtxoData.cs",
-              "RelativeToolTip": "Models\\UtxoData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:10:45.353Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T04:28:14.915Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "FeeEstimation.cs",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\FeeEstimation.cs",
-              "RelativeDocumentMoniker": "Models\\FeeEstimation.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Models\\FeeEstimation.cs",
-              "RelativeToolTip": "Models\\FeeEstimation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:10:29.412Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "faucet-api",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
-              "RelativeDocumentMoniker": "faucet-api.csproj",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
-              "RelativeToolTip": "faucet-api.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-12-07T04:27:25.527Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "faucet-api",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
-              "RelativeDocumentMoniker": "faucet-api.csproj",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
-              "RelativeToolTip": "faucet-api.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-12-07T04:17:33.008Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "appsettings.Development.json",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.Development.json",
-              "RelativeToolTip": "appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-12-07T03:31:54.207Z",
               "EditorCaption": ""
             }
           ]
