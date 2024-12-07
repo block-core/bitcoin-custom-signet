@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\controllers\\faucetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:controllers\\faucetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -31,6 +35,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "FaucetController.cs",
+              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Controllers\\FaucetController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FaucetController.cs",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Controllers\\FaucetController.cs",
+              "RelativeToolTip": "Controllers\\FaucetController.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAwwGkAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T12:05:28.41Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Dockerfile",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Dockerfile",
               "RelativeDocumentMoniker": "Dockerfile",
@@ -38,8 +55,7 @@
               "RelativeToolTip": "Dockerfile",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-07T11:49:11.298Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T11:49:11.298Z"
             },
             {
               "$type": "Document",
@@ -47,9 +63,9 @@
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs*",
-              "RelativeToolTip": "Program.cs*",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACcAAABBAAAAAAAAAA==",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAgwAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T11:31:39.147Z",
               "EditorCaption": ""
@@ -62,7 +78,7 @@
               "RelativeDocumentMoniker": "appsettings.json",
               "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-07T03:31:57.471Z",
               "EditorCaption": ""

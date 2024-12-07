@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mdk0YCJeA+o=",
+  "dgSpecHash": "tLrIkW4w3fE=",
   "success": true,
   "projectFilePath": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
   "expectedPackageFiles": [
@@ -32,7 +32,8 @@
     "C:\\Users\\Milad\\.nuget\\packages\\system.runtime.interopservices\\4.1.0\\system.runtime.interopservices.4.1.0.nupkg.sha512",
     "C:\\Users\\Milad\\.nuget\\packages\\system.text.encoding\\4.0.11\\system.text.encoding.4.0.11.nupkg.sha512",
     "C:\\Users\\Milad\\.nuget\\packages\\system.threading\\4.0.11\\system.threading.4.0.11.nupkg.sha512",
-    "C:\\Users\\Milad\\.nuget\\packages\\system.threading.tasks\\4.0.11\\system.threading.tasks.4.0.11.nupkg.sha512"
+    "C:\\Users\\Milad\\.nuget\\packages\\system.threading.tasks\\4.0.11\\system.threading.tasks.4.0.11.nupkg.sha512",
+    "C:\\Users\\Milad\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.100\\microsoft.net.sdk.compilers.toolset.9.0.100.nupkg.sha512"
   ],
   "logs": []
 }

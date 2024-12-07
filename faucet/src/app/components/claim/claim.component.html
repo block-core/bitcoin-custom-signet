@@ -1,5 +1,6 @@
 <div class="claim-container">
   <h2 class="section-title">Claim Your Bitcoin</h2>
+
   <form (ngSubmit)="submitClaim()" #claimForm="ngForm" class="claim-form">
     <!-- Bitcoin Address Input -->
     <div class="form-group">
@@ -10,11 +11,13 @@
         name="address"
         [(ngModel)]="address"
         #addressInput="ngModel"
+        [class.invalid]="addressInput.invalid && showErrors()"
+        placeholder="Enter your Bitcoin address"
         required
         class="form-control"
-        placeholder="Enter your Bitcoin address"
+        [disabled]="isSubmitting()"
       />
-      <div *ngIf="addressInput.invalid && addressInput.touched" class="error">
+      <div *ngIf="addressInput.invalid && showErrors()" class="error">
         Bitcoin address is required.
       </div>
     </div>
@@ -28,35 +31,35 @@
         name="amount"
         [(ngModel)]="amount"
         #amountInput="ngModel"
-        required
+        [class.invalid]="amountInput.invalid && showErrors()"
+        placeholder="Enter amount (e.g., 0.001)"
         min="0.00001"
         max="0.001"
         step="0.00001"
+        required
         class="form-control"
-        placeholder="Enter amount (e.g., 0.001)"
+        [disabled]="isSubmitting()"
       />
-      <div *ngIf="amountInput.invalid && amountInput.touched" class="error">
+      <div *ngIf="amountInput.invalid && showErrors()" class="error">
         Please enter a valid amount between 0.00001 and 0.001 BTC.
       </div>
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" [disabled]="claimForm.invalid" class="submit-button">
-      Claim Bitcoin
+    <button type="submit" [disabled]="isSubmitting() || claimForm.invalid" class="submit-button">
+      <ng-container *ngIf="isSubmitting(); else submitText">Submitting...</ng-container>
+      <ng-template #submitText>Claim Bitcoin</ng-template>
     </button>
   </form>
 
-  <!-- Explanation Box -->
-  <div class="info-box">
-    <h3>About Bitcoin Testnet</h3>
-    <p>
-      The Bitcoin Testnet is a parallel blockchain used for testing purposes. It functions just like the main Bitcoin network but with test Bitcoins, which hold no real-world value. Developers and enthusiasts use the Testnet to test applications, experiment with Bitcoin transactions, or learn without risking real Bitcoins.
-    </p>
-    <p>
-      <strong>Important Note:</strong> Testnet Bitcoins are purely for testing and development. They cannot be traded, sold, or used for real payments.
-    </p>
-    <p>
-      Use this faucet responsibly to claim small amounts of test Bitcoins for your experiments. Abuse of the faucet may result in restrictions.
-    </p>
+  <!-- Response Message -->
+  <div *ngIf="submissionStatus()" class="response-message" [ngClass]="submissionStatus()?.type">
+    <div *ngIf="submissionStatus()?.type === 'success'">
+      <h3>{{ submissionStatus()?.message }}</h3>
+      <p><strong>Transaction ID:</strong> {{ submissionStatus()?.transactionId }}</p>
+    </div>
+    <div *ngIf="submissionStatus()?.type === 'error'">
+      <p>{{ submissionStatus()?.message }}</p>
+    </div>
   </div>
 </div>

@@ -1,4 +1,3 @@
-/* General Reset */
 body, html {
   margin: 0;
   padding: 0;
@@ -16,7 +15,6 @@ p, a, button {
   font-weight: 400;
 }
 
-/* Header Styles */
 header {
   background-color: #086c81;
   color: #ffffff;
@@ -27,7 +25,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1164px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -57,12 +55,10 @@ nav {
   text-decoration: underline;
 }
 
-/* Main Content */
 .main-content {
   flex: 1;
 }
 
-/* Footer Styles */
 .footer {
   background-color: #086c81;
   color: #ffffff;
@@ -80,7 +76,6 @@ nav {
   text-decoration: underline;
 }
 
-/* Home Container */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -90,7 +85,6 @@ nav {
   background-color: #f9f9f9;
 }
 
-/* Hero Section */
 .hero-section {
   display: flex;
   flex-direction: row;
@@ -101,7 +95,8 @@ nav {
   color: #ffffff;
   padding: 2.5rem 2rem;
   border-radius: 12px;
-  max-width: 1100px;
+  max-width: 1164px;
+  margin: 0 auto;
 }
 
 .hero-content {
@@ -149,11 +144,11 @@ nav {
   background-color: #ffffff;
 }
 
-/* Steps Section */
 .steps-section {
   width: 100%;
   max-width: 1164px;
   text-align: center;
+  margin: 0 auto;
 }
 
 .section-title {
@@ -200,11 +195,11 @@ nav {
   color: #666666;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .hero-section {
     flex-direction: column;
     text-align: center;
+    padding: 2rem;
   }
 
   .hero-image {
@@ -214,4 +209,71 @@ nav {
   .steps {
     flex-direction: column;
   }
+}
+/* Response Messages */
+.response-message {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.response-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.response-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-control.invalid {
+  border-color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.form-control:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 }

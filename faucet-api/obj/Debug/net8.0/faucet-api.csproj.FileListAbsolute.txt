@@ -36,3 +36,4 @@ E:\Git\block-core\bitcoin-custom-signet\faucet-api\bin\Debug\net8.0\Newtonsoft.J
 E:\Git\block-core\bitcoin-custom-signet\faucet-api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 E:\Git\block-core\bitcoin-custom-signet\faucet-api\obj\Debug\net8.0\staticwebassets\msbuild.faucet-api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 E:\Git\block-core\bitcoin-custom-signet\faucet-api\bin\Debug\net8.0\NBitcoin.dll
+E:\Git\block-core\bitcoin-custom-signet\faucet-api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

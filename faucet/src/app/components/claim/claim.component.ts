@@ -1,37 +1,77 @@
+import { Component, Signal, computed, signal } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-
+export interface ClaimResponse {
+  transactionId: string;
+}
 @Component({
   selector: 'app-claim',
+  standalone: true,
   imports: [
     FormsModule,
     CommonModule
   ],
   templateUrl: './claim.component.html',
-  styleUrl: './claim.component.scss'
+  styleUrls: ['./claim.component.scss']
 })
 export class ClaimComponent {
-  address: string = '';
-  amount: number | null = null;
+  address = signal<string>('');
+  amount = signal<number | null>(null);
+  isSubmitting = signal<boolean>(false);
+  submissionStatus = signal<{ message: string; type: 'success' | 'error'; transactionId?: string } | null>(null);
 
-  submitClaim() {
-    if (!this.address || !this.amount) {
-      console.error('Invalid input');
+  // Control when error messages are displayed
+  showErrors = signal<boolean>(true);
+
+  // Validation Signals
+  isAddressValid: Signal<boolean> = computed(() => !!this.address());
+  isAmountValid: Signal<boolean> = computed(() => this.amount() !== null && this.amount()! > 0 && this.amount()! <= 0.001);
+
+  constructor(private apiService: ApiService) {}
+
+  submitClaim(): void {
+    this.showErrors.set(false);
+    this.submissionStatus.set(null);
+
+    if (!this.isAddressValid() || !this.isAmountValid()) {
+      this.submissionStatus.set({
+        message: 'Invalid address or amount. Please check your input.',
+        type: 'error'
+      });
       return;
     }
 
-    if (this.amount > 0.001) {
-      console.error('Amount exceeds the maximum limit of 0.001 BTC');
-      return;
-    }
+    this.isSubmitting.set(true);
 
-    console.log('Claim submitted:', {
-      address: this.address,
-      amount: this.amount,
+    const claimData = {
+      toAddress: this.address(),
+      amount: this.amount()!
+    };
+
+    this.apiService.post<ClaimResponse>('Faucet/send', claimData).subscribe({
+      next: (response) => {
+        this.submissionStatus.set({
+          message: 'Your request was successful!',
+          type: 'success',
+          transactionId: response.transactionId
+        });
+        this.resetForm();
+      },
+      error: (error) => {
+        this.submissionStatus.set({
+          message: error.message || 'An error occurred while submitting the claim.',
+          type: 'error'
+        });
+      },
+      complete: () => {
+        this.isSubmitting.set(false);
+      }
     });
+  }
 
-    // Add logic to send this data to the backend (e.g., via HTTP)
+  private resetForm(): void {
+    this.address.set('');
+    this.amount.set(null);
   }
 }

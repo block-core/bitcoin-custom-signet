@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("faucet-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+482298e1d95dce4399484e5c50d26d0d30f5327f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88c802822b2650a98f08bcdabaddd502eae138b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("faucet-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("faucet-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

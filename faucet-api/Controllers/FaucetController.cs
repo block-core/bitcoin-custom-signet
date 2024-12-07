@@ -21,16 +21,50 @@ namespace BitcoinFaucetApi.Controllers
 
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
+             if (bitcoinSettings == null || bitcoinSettings.Value == null)
+            {
+                throw new ArgumentNullException(nameof(bitcoinSettings), "Bitcoin settings are not configured.");
+            }
+
             _bitcoinSettings = bitcoinSettings.Value;
 
-            if (string.IsNullOrEmpty(_bitcoinSettings.IndexerUrl))
-                throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
+             if (string.IsNullOrEmpty(_bitcoinSettings.IndexerUrl))
+            {
+                throw new ArgumentException("IndexerUrl is not configured in appsettings.json.", nameof(_bitcoinSettings.IndexerUrl));
+            }
 
-            _network = Network.GetNetwork(_bitcoinSettings.Network.ToLower()) ?? Network.TestNet;
-            _mnemonic = new Mnemonic(_bitcoinSettings.Mnemonic);
-            _masterKey = _mnemonic.DeriveExtKey();
-            _indexerService = indexerService;
+             _network = Network.GetNetwork(_bitcoinSettings.Network.ToLower());
+            if (_network == null)
+            {
+                throw new InvalidOperationException($"The specified network '{_bitcoinSettings.Network}' is invalid or not supported.");
+            }
+
+             if (string.IsNullOrEmpty(_bitcoinSettings.Mnemonic))
+            {
+                throw new ArgumentException("Mnemonic is not configured in appsettings.json.", nameof(_bitcoinSettings.Mnemonic));
+            }
+
+            try
+            {
+                _mnemonic = new Mnemonic(_bitcoinSettings.Mnemonic);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to initialize mnemonic. Please check the provided mnemonic phrase.", ex);
+            }
+
+             try
+            {
+                _masterKey = _mnemonic.DeriveExtKey();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to derive the master key from the mnemonic.", ex);
+            }
+
+             _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
         }
+
 
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
