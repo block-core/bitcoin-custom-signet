@@ -18,3 +18,10 @@ services:
       Logging__LogLevel__Default: Debug
       DataConfig__UseDefaultPath: "true"
     restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    name: proxy
