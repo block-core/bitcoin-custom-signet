@@ -1,0 +1,23 @@
+{
+  "name": "faucet-api",
+  "version": "1.0.0",
+  "description": "Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/block-core/bitcoin-custom-signet.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "testnet"
+  ],
+  "author": "blockcore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/block-core/bitcoin-custom-signet/issues"
+  },
+  "homepage": "https://github.com/block-core/bitcoin-custom-signet#readme"
+}

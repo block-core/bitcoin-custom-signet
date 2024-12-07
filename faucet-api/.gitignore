@@ -1,0 +1,58 @@
+## .NET Core & Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.jfm
+*.pfx
+*.publishsettings
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+## Visual Studio Code
+.vscode/
+*.code-workspace
+
+## NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Rider
+.idea/
+
+## Test Results
+TestResults/
+
+## Local History
+.localhistory/
+
+## Misc
+*.log
+*.tmp
+*.temp
+*.cache
+*.bak
+*.swp
+*~
