@@ -80,10 +80,10 @@ jobs:
       run: |
         Compress-Archive -Path .\faucet-api\${{env.PROJECT_NAME}}\bin\publish\* -DestinationPath .\${{env.RELEASE_NAME}}
 
-    - name: Package (Mac)
-      if: matrix.os == 'macos-latest'
-      run: |
-        zip -r ${{env.RELEASE_NAME}} ./${{env.PROJECT_NAME}}/bin/publish/
+   # - name: Package (Mac)
+   #    if: matrix.os == 'macos-latest'
+   #    run: |
+   #     zip -r ${{env.RELEASE_NAME}} ./${{env.PROJECT_NAME}}/bin/publish/
 
 
     - uses: actions/upload-artifact@v3
