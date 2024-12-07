@@ -86,7 +86,7 @@ jobs:
         zip -r ${{env.RELEASE_NAME}} ./${{env.PROJECT_NAME}}/bin/publish/
 
 
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v3
       with:
         name: faucet-api
         path: "${{env.RELEASE_PATH}}"
