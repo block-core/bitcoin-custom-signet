@@ -4,7 +4,7 @@
   "description": "Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "version": "node -p \"require('./package.json').version\""
   },
   "repository": {
     "type": "git",
