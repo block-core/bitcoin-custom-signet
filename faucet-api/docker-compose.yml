@@ -3,7 +3,7 @@ version: '3.8'
 services:
   faucet-api:
     container_name: faucet-api
-    image: blockcore/faucet-api:1.0.4
+    image: blockcore/faucet-api:1.0.5
     mem_limit: 1024m
     cpus: 0.200
     environment:
@@ -16,12 +16,14 @@ services:
       ASPNETCORE_URLS: http://+:5500
       Logging__LogLevel__Default: Debug
       DataConfig__UseDefaultPath: "true"
-      Bitcoin__Mnemonic: ""
+      Bitcoin__Mnemonic: "margin radio diamond leg loud street announce guitar video shiver speed eyebrow"
       Bitcoin__Network: "TestNet"
       Bitcoin__IndexerUrl: "https://tbtc.indexer.angor.io"
       Bitcoin__FeeRate: 10001
       Bitcoin__ChangeAddressIndex: 0
     restart: unless-stopped
+    ports:
+      - "502:5500"
     networks:
       - proxy
 
