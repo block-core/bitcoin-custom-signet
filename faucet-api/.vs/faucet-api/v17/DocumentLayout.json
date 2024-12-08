@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\directory.build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:directory.build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED46320C-A327-414B-A99A-93003D5EFBFC}|faucet-api.csproj|e:\\git\\block-core\\bitcoin-custom-signet\\faucet-api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -38,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +50,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "Directory.Build.props",
+              "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Directory.Build.props",
+              "RelativeDocumentMoniker": "Directory.Build.props",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Directory.Build.props",
+              "RelativeToolTip": "Directory.Build.props",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-12-08T07:25:15.269Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "launchSettings.json",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -65,14 +82,14 @@
               "RelativeDocumentMoniker": "docker-compose.yml",
               "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\docker-compose.yml",
               "RelativeToolTip": "docker-compose.yml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-08T01:33:49.211Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "FaucetController.cs",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Controllers\\FaucetController.cs",
               "RelativeDocumentMoniker": "Controllers\\FaucetController.cs",
@@ -84,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Dockerfile",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Dockerfile",
               "RelativeDocumentMoniker": "Dockerfile",
@@ -97,20 +114,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs*",
-              "RelativeToolTip": "Program.cs*",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAA==",
+              "ToolTip": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T11:31:39.147Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "faucet-api",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\faucet-api.csproj",
               "RelativeDocumentMoniker": "faucet-api.csproj",
@@ -122,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "E:\\Git\\block-core\\bitcoin-custom-signet\\faucet-api\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
