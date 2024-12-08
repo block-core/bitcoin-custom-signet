@@ -7,40 +7,36 @@ import { RouterModule } from '@angular/router';
   template: `
     <div class="home-container">
       <!-- Hero Section -->
-      <header class="hero-section">
-        <div class="container">
-          <div class="hero-content">
-            <div class="hero-text">
-              <h1 class="title">Welcome to Bitcoin Faucet</h1>
-              <p class="subtitle">Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!</p>
-              <button class="cta-button" aria-label="Get Bitcoin Now" [routerLink]="['/claim']">Get Bitcoin Now</button>
-            </div>
-            <img src="faucet.png" alt="Illustration of Bitcoin Faucet" class="hero-image" />
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="title">Welcome to Bitcoin Faucet</h1>
+            <p class="subtitle">Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!</p>
+            <button class="cta-button" aria-label="Get Bitcoin Now" [routerLink]="['/claim']">Get Bitcoin Now</button>
           </div>
+          <img src="faucet.png" alt="Illustration of Bitcoin Faucet" class="hero-image" />
         </div>
-      </header>
+      </section>
 
       <!-- How It Works Section -->
       <section class="steps-section" aria-labelledby="how-it-works-title">
-        <div class="container">
-          <h2 class="section-title" id="how-it-works-title">How It Works</h2>
-          <div class="steps">
-            <article class="step">
-              <div class="step-icon" aria-hidden="true">1</div>
-              <h3>Enter Your Wallet Address</h3>
-              <p>Provide your Testnet Bitcoin address to receive rewards.</p>
-            </article>
-            <article class="step">
-              <div class="step-icon" aria-hidden="true">2</div>
-              <h3>Enter the Amount</h3>
-              <p>Specify the amount (less than 50 BTC test).</p>
-            </article>
-            <article class="step">
-              <div class="step-icon" aria-hidden="true">3</div>
-              <h3>Claim Your Bitcoin</h3>
-              <p>Submit your request and get your free Bitcoin instantly! (1 request per IP per 24 hours)</p>
-            </article>
-          </div>
+        <h2 class="section-title" id="how-it-works-title">How It Works</h2>
+        <div class="steps">
+          <article class="step">
+            <div class="step-icon" aria-hidden="true">1</div>
+            <h3>Enter Your Wallet Address</h3>
+            <p>Provide your Testnet Bitcoin address to receive rewards.</p>
+          </article>
+          <article class="step">
+            <div class="step-icon" aria-hidden="true">2</div>
+            <h3>Enter the Amount</h3>
+            <p>Specify the amount (less than 50 BTC test).</p>
+          </article>
+          <article class="step">
+            <div class="step-icon" aria-hidden="true">3</div>
+            <h3>Claim Your Bitcoin</h3>
+            <p>Submit your request and get your free Bitcoin instantly! (1 request per IP per 24 hours)</p>
+          </article>
         </div>
       </section>
     </div>

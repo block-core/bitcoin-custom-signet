@@ -81,30 +81,35 @@ nav {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
   background-color: #f9f9f9;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  text-align: left;
+  justify-content: center;
   background-color: #086c81;
   color: #ffffff;
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 1rem;
   border-radius: 12px;
+  width: 100%;
   max-width: 1164px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .hero-content {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   gap: 2rem;
   width: 100%;
+  max-width: 1000px;
 }
 
 .hero-text {
@@ -197,9 +202,16 @@ nav {
 
 @media (max-width: 768px) {
   .hero-section {
+    padding: 2rem 1rem;
+  }
+
+  .hero-content {
     flex-direction: column;
     text-align: center;
-    padding: 2rem;
+  }
+
+  .hero-text {
+    width: 100%;
   }
 
   .hero-image {
