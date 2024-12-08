@@ -29,6 +29,7 @@ msbuild.wrn
 
 ## Visual Studio Code
 .vscode/
+.vs
 *.code-workspace
 
 ## NuGet

@@ -23,7 +23,7 @@ services:
       Bitcoin__ChangeAddressIndex: 0
     restart: unless-stopped
     ports:
-      - "502:5500"
+      - "5500:5500"
     networks:
       - proxy
 
