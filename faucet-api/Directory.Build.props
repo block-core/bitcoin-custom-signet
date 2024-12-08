@@ -1,6 +1,6 @@
 <Project>
    <PropertyGroup>
-      <Version>1.0.6</Version>
+      <Version>1.0.7</Version>
       <Authors>Blockcore</Authors>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageProjectUrl>https://github.com/block-core/bitcoin-custom-signet</PackageProjectUrl>
