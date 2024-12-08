@@ -1,4 +1,4 @@
-@faucet_api_HostAddress = http://localhost:5071
+@faucet_api_HostAddress = http://localhost:5500
 
 GET {{faucet_api_HostAddress}}/weatherforecast/
 Accept: application/json

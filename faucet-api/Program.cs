@@ -1,10 +1,12 @@
 using BitcoinFaucetApi.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddCommandLine(args);
 
 builder.Services.Configure<BitcoinSettings>(builder.Configuration.GetSection("Bitcoin"));
+
 builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
@@ -19,7 +21,24 @@ builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    string assemblyVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "1.0.0";
+
+    options.SwaggerDoc("api", new OpenApiInfo
+    {
+        Title = "Bitcoin Faucet Api",
+        Version = assemblyVersion,
+        Description = "Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!",
+        Contact = new OpenApiContact
+        {
+            Name = "Bitcoin Faucet",
+            Url = new Uri("https://faucet.angor.io/")
+        }
+    });
+
+    options.EnableAnnotations();
+});
 
 builder.Services.AddCors(options =>
 {
@@ -33,22 +52,21 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "docs/{documentName}/openapi.json";
+    });
+    app.UseSwaggerUI(c =>
+    {
+        c.RoutePrefix = "docs";
+        c.SwaggerEndpoint("/docs/api/openapi.json", "Bitcoin Faucet Api");
+    });
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-app.MapControllers();
-
 app.UseCors("AllowAll");
 
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bitcoin Faucet");
-    c.RoutePrefix = "docs";  
-});
+app.MapControllers();
 
 app.Run();
