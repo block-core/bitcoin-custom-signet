@@ -121,7 +121,7 @@ namespace BitcoinFaucetApi.Controllers
                     return StatusCode(500, $"Failed to broadcast transaction: {broadcastResult}");
                 }
 
-                return Ok(tx.ToHex());
+                return Ok(new { TransactionId = tx.GetHash().ToString() });
             }
             catch (FormatException ex)
             {
