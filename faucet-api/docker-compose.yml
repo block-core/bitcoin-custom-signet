@@ -16,6 +16,11 @@ services:
       ASPNETCORE_URLS: http://+:5500
       Logging__LogLevel__Default: Debug
       DataConfig__UseDefaultPath: "true"
+      Bitcoin__Mnemonic: ""
+      Bitcoin__Network: "TestNet"
+      Bitcoin__IndexerUrl: "https://tbtc.indexer.angor.io"
+      Bitcoin__FeeRate: 10001
+      Bitcoin__ChangeAddressIndex: 0
     restart: unless-stopped
     networks:
       - proxy
