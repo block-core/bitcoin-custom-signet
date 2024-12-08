@@ -28,13 +28,14 @@ export interface ClaimResponse {
             name="address"
             [(ngModel)]="address"
             #addressInput="ngModel"
-            [class.invalid]="addressInput.invalid && showErrors()"
+            (blur)="addressTouched.set(true)"
+            [class.invalid]="addressInput.invalid && shouldShowError(addressTouched())"
             placeholder="Enter your Bitcoin address"
             required
             class="form-control"
             [disabled]="isSubmitting()"
           />
-          <div *ngIf="addressInput.invalid && showErrors()" class="error">
+          <div *ngIf="addressInput.invalid && shouldShowError(addressTouched())" class="error">
             Bitcoin address is required.
           </div>
         </div>
@@ -48,7 +49,8 @@ export interface ClaimResponse {
             name="amount"
             [(ngModel)]="amount"
             #amountInput="ngModel"
-            [class.invalid]="amountInput.invalid && showErrors()"
+            (blur)="amountTouched.set(true)"
+            [class.invalid]="amountInput.invalid && shouldShowError(amountTouched())"
             placeholder="Enter amount (e.g., 0.001)"
             min="0.00001"
             max="0.001"
@@ -57,7 +59,7 @@ export interface ClaimResponse {
             class="form-control"
             [disabled]="isSubmitting()"
           />
-          <div *ngIf="amountInput.invalid && showErrors()" class="error">
+          <div *ngIf="amountInput.invalid && shouldShowError(amountTouched())" class="error">
             Please enter a valid amount between 0.00001 and 0.001 BTC.
           </div>
         </div>
@@ -161,6 +163,11 @@ export class ClaimComponent {
   isSubmitting = signal<boolean>(false);
   submissionStatus = signal<{ message: string; type: 'success' | 'error'; transactionId?: string } | null>(null);
 
+  // Track touched state for each field
+  addressTouched = signal<boolean>(false);
+  amountTouched = signal<boolean>(false);
+  formSubmitted = signal<boolean>(false);
+
   // Control when error messages are displayed
   showErrors = signal<boolean>(true);
 
@@ -170,8 +177,12 @@ export class ClaimComponent {
 
   constructor(private apiService: ApiService) {}
 
+  shouldShowError(fieldTouched: boolean): boolean {
+    return fieldTouched || this.formSubmitted();
+  }
+
   submitClaim(): void {
-    this.showErrors.set(false);
+    this.formSubmitted.set(true);
     this.submissionStatus.set(null);
 
     if (!this.isAddressValid() || !this.isAmountValid()) {
@@ -213,5 +224,8 @@ export class ClaimComponent {
   private resetForm(): void {
     this.address.set('');
     this.amount.set(null);
+    this.addressTouched.set(false);
+    this.amountTouched.set(false);
+    this.formSubmitted.set(false);
   }
 }
