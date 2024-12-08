@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-layout',
+  standalone: true,
   imports: [RouterModule],
   template: `
     <!-- Header -->
@@ -35,5 +38,17 @@ import { RouterModule } from '@angular/router';
     }
   `]
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private scrollService: ScrollService
+  ) {}
+
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.scrollService.scrollToTop();
+    });
+  }
 }
