@@ -65,6 +65,12 @@ namespace BitcoinFaucetApi.Controllers
              _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
         }
 
+        [HttpGet("send/{address}/{amount?}")]
+        public async Task<IActionResult> SendFunds(string address, long? amount)
+        {
+            await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
+            return Ok("Funds sent successfully");
+        }
 
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
