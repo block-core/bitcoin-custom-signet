@@ -68,8 +68,7 @@ namespace BitcoinFaucetApi.Controllers
         [HttpGet("send/{address}/{amount?}")]
         public async Task<IActionResult> SendFunds(string address, long? amount)
         {
-            await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
-            return Ok("Funds sent successfully");
+            return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
         }
 
         [HttpPost("send")]
@@ -122,7 +121,7 @@ namespace BitcoinFaucetApi.Controllers
                     return StatusCode(500, $"Failed to broadcast transaction: {broadcastResult}");
                 }
 
-                return Ok(new { TransactionId = tx.GetHash().ToString() });
+                return Ok(tx.ToHex());
             }
             catch (FormatException ex)
             {
