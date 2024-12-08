@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://localhost:7235/api'
+  apiUrl: 'https://faucettmp.angor.io/api'
 };

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://localhost:7235",
+    "target": "https://faucettmp.angor.io",
     "secure": false,
     "changeOrigin": true
   }
