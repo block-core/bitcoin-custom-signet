@@ -1,0 +1,24 @@
+<Project>
+   <PropertyGroup>
+      <Version>1.0.5</Version>
+      <Authors>Blockcore</Authors>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <PackageProjectUrl>https://github.com/block-core/bitcoin-custom-signet</PackageProjectUrl>
+      <RepositoryType>git</RepositoryType>
+      <RepositoryUrl>git://github.com/block-core/bitcoin-custom-signet</RepositoryUrl>
+      <PackageIcon></PackageIcon>
+      <PackageIconUrl>https://angor.io/angor-logo.jpg</PackageIconUrl>
+      <PackageTags>blockchain;cryptocurrency;crypto;C#;.NET;bitcoin;blockcore;angor</PackageTags>
+      <GenerateDocumentationFile>true</GenerateDocumentationFile>
+      <PublishRepositoryUrl>true</PublishRepositoryUrl>
+      <EmbedUntrackedSources>true</EmbedUntrackedSources>
+      <IncludeSymbols>true</IncludeSymbols>
+      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+      <DebugType>portable</DebugType>
+   </PropertyGroup>
+
+   <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+   </ItemGroup>
+
+</Project>
