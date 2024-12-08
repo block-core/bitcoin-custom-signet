@@ -5,6 +5,8 @@ body, html {
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -16,9 +18,15 @@ p, a, button {
 }
 
 header {
-  background-color: #086c81;
+  position: sticky;
+  top: 0;
+  background-color: rgba(8, 108, 129, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: #ffffff;
   padding: 1rem 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 nav {
