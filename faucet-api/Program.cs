@@ -4,7 +4,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddCommandLine(args);
-
 builder.Services.Configure<BitcoinSettings>(builder.Configuration.GetSection("Bitcoin"));
 
 builder.Services.AddControllers();
@@ -16,7 +15,6 @@ builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
     {
         throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
     }
-
     client.BaseAddress = new Uri(indexerUrl);
 });
 
@@ -50,19 +48,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger(c =>
 {
-    app.UseSwagger(c =>
-    {
-        c.RouteTemplate = "docs/{documentName}/openapi.json";
-    });
-    app.UseSwaggerUI(c =>
-    {
-        c.RoutePrefix = "docs";
-        c.SwaggerEndpoint("/docs/api/openapi.json", "Bitcoin Faucet Api");
-    });
-}
-
+    c.RouteTemplate = "docs/{documentName}/openapi.json";
+});
+app.UseSwaggerUI(c =>
+{
+    c.RoutePrefix = "docs";
+    c.SwaggerEndpoint("/docs/api/openapi.json", "Bitcoin Faucet Api");
+});
 
 app.UseCors("AllowAll");
 

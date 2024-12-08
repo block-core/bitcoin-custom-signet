@@ -14,6 +14,7 @@ services:
       LETSENCRYPT_HOST: faucettmp.angor.io
       LETSENCRYPT_EMAIL: admin@blockcore.net
       ASPNETCORE_URLS: http://+:5500
+      ASPNETCORE_ENVIRONMENT: Development
       Logging__LogLevel__Default: Debug
       DataConfig__UseDefaultPath: "true"
       Bitcoin__Mnemonic: "margin radio diamond leg loud street announce guitar video shiver speed eyebrow"
