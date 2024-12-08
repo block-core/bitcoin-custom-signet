@@ -162,50 +162,84 @@ nav {
   max-width: 1164px;
   text-align: center;
   margin: 0 auto;
-}
-
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  padding: 2rem 0;
 }
 
 .steps {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 1rem;
 }
 
 .step {
   background-color: #ffffff;
-  border: 1px solid #cbdde1;
-  border-radius: 8px;
-  padding: 1.5rem;
-  flex: 1;
-  text-align: center;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #086c81, #cbdde1);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: left;
+}
+
+.step:hover::before {
+  transform: scaleX(1);
 }
 
 .step-icon {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto 1rem auto;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem auto;
   border-radius: 50%;
   background-color: #086c81;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.step:hover .step-icon {
+  transform: scale(1.1);
 }
 
 .step h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #086c81;
 }
 
 .step p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #666666;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
@@ -227,9 +261,21 @@ nav {
   }
 
   .steps {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .step {
+    max-width: 400px;
+    margin: 0 auto;
   }
 }
+
+// Animation delays for staggered effect
+.step:nth-child(1) { transition-delay: 0.1s; }
+.step:nth-child(2) { transition-delay: 0.3s; }
+.step:nth-child(3) { transition-delay: 0.5s; }
+
 /* Response Messages */
 .response-message {
   margin-top: 20px;
