@@ -71,6 +71,30 @@ export interface ClaimResponse {
           </div>
         </div>
 
+        <!-- CAPTCHA -->
+        <div class="form-group">
+          <label for="captcha">CAPTCHA: {{ captchaQuestion }}</label>
+          <input
+            type="text"
+            id="captcha"
+            name="captcha"
+            [(ngModel)]="captchaAnswer"
+            #captchaInput="ngModel"
+            (blur)="captchaTouched.set(true)"
+            [class.invalid]="captchaInput.invalid && shouldShowError(captchaTouched())"
+            placeholder="Enter the answer"
+            required
+            class="form-control"
+            [disabled]="isSubmitting()"
+          />
+          <div *ngIf="captchaInput.invalid && shouldShowError(captchaTouched())" class="error">
+            CAPTCHA answer is required.
+          </div>
+          <div *ngIf="captchaError()" class="error">
+            Incorrect CAPTCHA answer. Please try again.
+          </div>
+        </div>
+
         <!-- Submit Button -->
         <button type="submit" [disabled]="isSubmitting() || claimForm.invalid" class="submit-button">
           <ng-container *ngIf="isSubmitting(); else submitText">Submitting...</ng-container>
@@ -290,6 +314,10 @@ export class ClaimComponent {
   amount = signal<number | null>(null);
   isSubmitting = signal<boolean>(false);
   submissionStatus = signal<{ message: string; type: 'success' | 'error'; transactionId?: string } | null>(null);
+  captchaAnswer = signal<string>('');
+  captchaTouched = signal<boolean>(false);
+  captchaError = signal<boolean>(false);
+  captchaQuestion = this.generateCaptchaQuestion();
 
   // Track touched state for each field
   addressTouched = signal<boolean>(false);
@@ -302,6 +330,7 @@ export class ClaimComponent {
   // Validation Signals
   isAddressValid: Signal<boolean> = computed(() => !!this.address());
   isAmountValid: Signal<boolean> = computed(() => this.amount() !== null && this.amount()! > 0 && this.amount()! <= 0.1);
+  isCaptchaValid: Signal<boolean> = computed(() => this.captchaAnswer() === this.solveCaptchaQuestion() && this.formSubmitted());
 
   constructor(private apiService: ApiService) {}
 
@@ -309,15 +338,27 @@ export class ClaimComponent {
     return fieldTouched || this.formSubmitted();
   }
 
+  generateCaptchaQuestion(): string {
+    const num1 = Math.floor(Math.random() * 10);
+    const num2 = Math.floor(Math.random() * 10);
+    return `${num1} + ${num2}`;
+  }
+
+  solveCaptchaQuestion(): string {
+    const [num1, num2] = this.captchaQuestion.split(' + ').map(Number);
+    return (num1 + num2).toString();
+  }
+
   submitClaim(): void {
     this.formSubmitted.set(true);
     this.submissionStatus.set(null);
 
-    if (!this.isAddressValid() || !this.isAmountValid()) {
+    if (!this.isAddressValid() || !this.isAmountValid() || !this.isCaptchaValid()) {
       this.submissionStatus.set({
-        message: 'Invalid address or amount. Please check your input.',
+        message: 'Invalid address, amount, or CAPTCHA. Please check your input.',
         type: 'error'
       });
+      this.captchaError.set(true);
       return;
     }
 
@@ -352,9 +393,14 @@ export class ClaimComponent {
   private resetForm(): void {
     this.address.set('');
     this.amount.set(null);
+    this.captchaAnswer.set('');
+    this.captchaQuestion = this.generateCaptchaQuestion();
     this.addressTouched.set(false);
     this.amountTouched.set(false);
+    this.captchaTouched.set(false);
     this.formSubmitted.set(false);
+
+    this.captchaError.set(false);
   }
 
   setAmount(amount: number): void {
