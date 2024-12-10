@@ -29,12 +29,12 @@ import { RouterModule } from '@angular/router';
           <article class="step" #stepElement>
             <div class="step-icon" aria-hidden="true">2</div>
             <h3>Enter the Amount</h3>
-            <p>Specify the amount (less than 50 BTC test).</p>
+            <p>Specify the amount (less than 0.1 BTC test).</p>
           </article>
           <article class="step" #stepElement>
             <div class="step-icon" aria-hidden="true">3</div>
             <h3>Claim Your Bitcoin</h3>
-            <p>Submit your request and get your free Bitcoin instantly! (1 request per IP per 24 hours)</p>
+            <p>Submit your request and get your free Bitcoin instantly!</p>
           </article>
         </div>
       </section>

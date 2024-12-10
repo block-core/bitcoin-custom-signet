@@ -22,7 +22,7 @@ import { ScrollService } from '../services/scroll.service';
     </header>
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="main-content">
       <router-outlet></router-outlet>
     </div>
 
