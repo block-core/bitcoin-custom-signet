@@ -1,6 +1,6 @@
 {
   "name": "faucet-api",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!",
   "main": "index.js",
   "scripts": {
