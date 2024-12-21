@@ -21,25 +21,25 @@ namespace BitcoinFaucetApi.Controllers
 
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
-             if (bitcoinSettings == null || bitcoinSettings.Value == null)
+            if (bitcoinSettings == null || bitcoinSettings.Value == null)
             {
                 throw new ArgumentNullException(nameof(bitcoinSettings), "Bitcoin settings are not configured.");
             }
 
             _bitcoinSettings = bitcoinSettings.Value;
 
-             if (string.IsNullOrEmpty(_bitcoinSettings.IndexerUrl))
+            if (string.IsNullOrEmpty(_bitcoinSettings.IndexerUrl))
             {
                 throw new ArgumentException("IndexerUrl is not configured in appsettings.json.", nameof(_bitcoinSettings.IndexerUrl));
             }
 
-             _network = Network.GetNetwork(_bitcoinSettings.Network.ToLower());
+            _network = Network.GetNetwork(_bitcoinSettings.Network.ToLower());
             if (_network == null)
             {
                 throw new InvalidOperationException($"The specified network '{_bitcoinSettings.Network}' is invalid or not supported.");
             }
 
-             if (string.IsNullOrEmpty(_bitcoinSettings.Mnemonic))
+            if (string.IsNullOrEmpty(_bitcoinSettings.Mnemonic))
             {
                 throw new ArgumentException("Mnemonic is not configured in appsettings.json.", nameof(_bitcoinSettings.Mnemonic));
             }
@@ -53,7 +53,7 @@ namespace BitcoinFaucetApi.Controllers
                 throw new InvalidOperationException("Failed to initialize mnemonic. Please check the provided mnemonic phrase.", ex);
             }
 
-             try
+            try
             {
                 _masterKey = _mnemonic.DeriveExtKey();
             }
@@ -62,7 +62,7 @@ namespace BitcoinFaucetApi.Controllers
                 throw new InvalidOperationException("Failed to derive the master key from the mnemonic.", ex);
             }
 
-             _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
+            _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
         }
 
         [HttpGet("send/{address}/{amount?}")]
@@ -97,12 +97,13 @@ namespace BitcoinFaucetApi.Controllers
                 {
                     var outPoint = new OutPoint(uint256.Parse(utxo.outpoint.transactionId), utxo.outpoint.outputIndex);
                     return new Coin(outPoint, new TxOut(Money.Satoshis(utxo.value), fromAddress.ScriptPubKey));
-                }).ToList();
+                }).Take(2).ToList();
 
                 var txBuilder = _network.CreateTransactionBuilder();
                 var tx = txBuilder
                     .AddCoins(coins)
                     .AddKeys(privateKey)
+                    .Send(toAddress, amount)
                     .Send(toAddress, amount)
                     .SetChange(fromAddress)
                     .SendFees(Money.Satoshis(_bitcoinSettings.FeeRate))
