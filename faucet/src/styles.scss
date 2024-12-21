@@ -5,6 +5,7 @@ body, html {
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: auto;
 }
@@ -73,6 +74,7 @@ nav {
   text-align: center;
   padding: 0.3rem 0;
   width: 100%;
+  margin-top: auto;
 }
 
 .footer a {
@@ -264,7 +266,7 @@ nav {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .step {
     max-width: 400px;
     margin: 0 auto;
@@ -310,7 +312,6 @@ nav {
 }
 
 .form-control {
-  width: 100%;
   padding: 10px;
   border: 1px solid #ced4da;
   border-radius: 5px;
