@@ -65,12 +65,6 @@ namespace BitcoinFaucetApi.Controllers
             _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
         }
 
-        [HttpGet("send/{address}/{address2}/{amount?}")]
-        public async Task<IActionResult> SendFunds(string address, string address2, long? amount)
-        {
-            return await SendFunds(new SendRequest { ToAddress = address, Amount = amount ?? 20, ToAddress2 = address2, Amount2 = amount ?? 20 });
-        }
-
         [HttpGet("send/{address}/{amount?}")]
         public async Task<IActionResult> SendFunds(string address, long? amount)
         {
@@ -89,9 +83,6 @@ namespace BitcoinFaucetApi.Controllers
                 var toAddress = BitcoinAddress.Create(request.ToAddress, _network);
                 var amount = Money.Coins(request.Amount);
 
-                BitcoinAddress? toAddress2 = !string.IsNullOrEmpty(request.ToAddress2) ? BitcoinAddress.Create(request.ToAddress2, _network) : null;
-                Money amount2 = Money.Coins(request.Amount2 > 0 ? request.Amount2 : request.Amount);
-
                 var keyPath = new KeyPath($"m/84'/1'/0'/0/{_bitcoinSettings.ChangeAddressIndex}");
                 var privateKey = _masterKey.Derive(keyPath).PrivateKey;
                 var fromAddress = privateKey.PubKey.GetAddress(ScriptPubKeyType.Segwit, _network);
@@ -109,18 +100,13 @@ namespace BitcoinFaucetApi.Controllers
                 }).Take(2).ToList();
 
                 var txBuilder = _network.CreateTransactionBuilder();
-                var txbuilder = txBuilder
+                var tx = txBuilder
                     .AddCoins(coins)
                     .AddKeys(privateKey)
                     .Send(toAddress, amount)
                     .SetChange(fromAddress)
-                    .SendFees(Money.Satoshis(_bitcoinSettings.FeeRate));
-
-
-                if (toAddress2 != null)
-                    txbuilder.Send(toAddress2, amount2);
-
-                var tx = txbuilder.BuildTransaction(true);
+                    .SendFees(Money.Satoshis(_bitcoinSettings.FeeRate))
+                    .BuildTransaction(true);
 
                 if (!txBuilder.Verify(tx))
                 {
@@ -220,9 +206,7 @@ namespace BitcoinFaucetApi.Controllers
         public class SendRequest
         {
             public string ToAddress { get; set; }
-            public string ToAddress2 { get; set; }
             public decimal Amount { get; set; }
-            public decimal Amount2 { get; set; }
         }
     }
 }
