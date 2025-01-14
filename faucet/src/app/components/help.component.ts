@@ -3,132 +3,90 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-help',
+  standalone: true,
   imports: [RouterModule],
   template: `
-    <div class="help-container">
-      <h2 class="section-title">Help & FAQs</h2>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Help & FAQs</h2>
 
       <!-- How to Use Section -->
-      <div class="help-section">
-        <h3>How to Use This Faucet?</h3>
-        <ol>
-          <li>Go to the <a [routerLink]="['/claim']">Claim</a> page.</li>
-          <li>Enter your Bitcoin Testnet address.</li>
-          <li>Specify the amount (up to <strong>0.001 BTC</strong>).</li>
-          <li>Click the "Claim Bitcoin" button and wait for the transaction to complete.</li>
+      <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-primary mb-4">How to Use This Faucet?</h3>
+        <ol class="space-y-4 text-gray-600">
+          <li class="flex items-start">
+            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">1</span>
+            <span>Go to the <a [routerLink]="['/claim']" class="text-primary hover:underline">Claim</a> page.</span>
+          </li>
+          <li class="flex items-start">
+            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">2</span>
+            <span>Enter your Bitcoin Testnet address.</span>
+          </li>
+          <li class="flex items-start">
+            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">3</span>
+            <span>Specify the amount (up to <strong>0.001 BTC</strong>).</span>
+          </li>
+          <li class="flex items-start">
+            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">4</span>
+            <span>Click the "Claim Bitcoin" button and wait for the transaction to complete.</span>
+          </li>
         </ol>
       </div>
 
       <!-- FAQ Section -->
-      <div class="help-section">
-        <h3>Frequently Asked Questions</h3>
-        <div class="faq">
-          <h4>What is Bitcoin Testnet?</h4>
-          <p>Bitcoin Testnet is a parallel blockchain used for testing and experimentation. The coins on this network have no real-world value.</p>
-        </div>
+      <div class="space-y-4">
+        <h3 class="text-xl font-semibold text-primary mb-4">Frequently Asked Questions</h3>
 
-        <div class="faq">
-          <h4>How do I get a Bitcoin Testnet wallet?</h4>
-          <p>You can download Testnet-compatible wallets such as Electrum or Bitcoin Core. Make sure the wallet is configured to use Testnet.</p>
-        </div>
-
-        <div class="faq">
-          <h4>Can I use Testnet Bitcoin on the Mainnet?</h4>
-          <p>No, Testnet Bitcoins are only valid on the Testnet and cannot be used on the Bitcoin Mainnet.</p>
-        </div>
-
-        <div class="faq">
-          <h4>Why is my transaction taking time?</h4>
-          <p>Testnet transactions rely on Testnet miners. If there are fewer miners, transactions may take longer. This is normal for Testnet.</p>
-        </div>
-
-        <div class="faq">
-          <h4>Is there a limit to how much I can claim?</h4>
-          <p>Yes, the maximum amount per claim is <strong>0.001 BTC</strong> to ensure fair usage for everyone.</p>
+        <div class="bg-white shadow-sm rounded-lg divide-y divide-gray-200">
+          <div class="p-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">What is Bitcoin Testnet?</h4>
+            <p class="text-gray-600">
+              Bitcoin Testnet is a parallel blockchain used for testing and experimentation.
+              The coins on this network have no real-world value.
+            </p>
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">How do I get a Bitcoin Testnet wallet?</h4>
+            <p class="text-gray-600">
+              You can download Testnet-compatible wallets such as Electrum or Bitcoin Core.
+              Make sure the wallet is configured to use Testnet.
+            </p>
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">Can I use Testnet Bitcoin on the Mainnet?</h4>
+            <p class="text-gray-600">
+              No, Testnet Bitcoins are only valid on the Testnet and cannot be used on the Bitcoin Mainnet.
+            </p>
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">Why is my transaction taking time?</h4>
+            <p class="text-gray-600">
+              Testnet transactions rely on Testnet miners. If there are fewer miners, transactions may take longer.
+              This is normal for Testnet.
+            </p>
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">Is there a limit to how much I can claim?</h4>
+            <p class="text-gray-600">
+              Yes, the maximum amount per claim is <strong>0.001 BTC</strong> to ensure fair usage for everyone.
+            </p>
+          </div>
         </div>
       </div>
 
       <!-- Contact Section -->
-      <div class="help-section">
-        <h3>Need Further Assistance?</h3>
-        <p>If you have additional questions or issues, feel free to reach out to us:</p>
-        <ul>
-          <li>Discord: <a href="https://www.blockcore.net/discord" target="_blank">Join our Discord</a></li>
-        </ul>
+      <div class="mt-8 bg-primary/5 rounded-lg p-6 border border-primary/10">
+        <h3 class="text-xl font-semibold text-primary mb-4">Need Further Assistance?</h3>
+        <p class="text-gray-600 mb-4">If you have additional questions or issues, reach out to us:</p>
+        <a href="https://www.blockcore.net/discord"
+           target="_blank"
+           class="inline-flex items-center text-primary hover:text-primary-dark">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515..."/>
+          </svg>
+          Join our Discord
+        </a>
       </div>
     </div>
-  `,
-  styles: [`
-    .help-container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background-color: #f9f9f9;
-      border: 1px solid #cbdde1;
-      border-radius: 12px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-title {
-      font-size: 2rem;
-      color: #086c81;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-weight: bold;
-    }
-
-    .help-section {
-      margin-bottom: 2rem;
-    }
-
-    .help-section h3 {
-      font-size: 1.5rem;
-      color: #086c81;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
-
-    .help-section p, .help-section ol, .help-section ul {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: #022229;
-    }
-
-    .help-section ul {
-      list-style: disc;
-      margin-left: 1.5rem;
-    }
-
-    .help-section ol {
-      list-style: decimal;
-      margin-left: 1.5rem;
-    }
-
-    .help-section a {
-      color: #086c81;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .help-section a:hover {
-      text-decoration: underline;
-    }
-
-    .faq {
-      margin-bottom: 1.5rem;
-    }
-
-    .faq h4 {
-      font-size: 1.2rem;
-      color: #022229;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-
-    .faq p {
-      margin: 0;
-    }
-  `]
+  `
 })
-export class HelpComponent {
-}
+export class HelpComponent {}

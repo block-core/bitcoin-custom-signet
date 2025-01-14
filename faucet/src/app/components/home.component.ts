@@ -1,126 +1,80 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterModule],
+  standalone: true,
+  imports: [RouterModule, CommonModule],
   template: `
-    <div class="home-container">
-      <section class="hero-section">
-        <div class="hero-content">
-          <div class="hero-text animate-in">
-            <h1 class="title animate-item">Welcome to Bitcoin Faucet</h1>
-            <p class="subtitle animate-item">Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!</p>
-            <button class="cta-button animate-item" aria-label="Get Bitcoin Now" [routerLink]="['/claim']">Get Bitcoin Now</button>
+    <div class="bg-gray-50">
+      <!-- Hero Section -->
+      <section class="py-20 px-4 md:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex-1 text-center md:text-left space-y-6">
+              <h1 class="text-4xl md:text-5xl font-bold text-gray-900 opacity-0 transform translate-y-4 transition-all duration-700 ease-out"
+                  [class.opacity-100]="true" [class.translate-y-0]="true">
+                Welcome to Bitcoin Faucet
+              </h1>
+              <p class="text-xl text-gray-600 opacity-0 transform translate-y-4 transition-all duration-700 delay-200 ease-out"
+                 [class.opacity-100]="true" [class.translate-y-0]="true">
+                Claim free Bitcoin instantly with your Testnet wallet address. Simple and secure!
+              </p>
+              <button [routerLink]="['/claim']"
+                      class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300 opacity-0 transform translate-y-4 transition-all duration-700 delay-400 ease-out"
+                      [class.opacity-100]="true" [class.translate-y-0]="true">
+                Get Bitcoin Now
+              </button>
+            </div>
+            <div class="flex-1">
+              <img src="faucet.png" alt="Bitcoin Faucet Illustration"
+                   class="w-full max-w-md mx-auto opacity-0 transform translate-x-4 transition-all duration-700 delay-500 ease-out"
+                   [class.opacity-100]="true" [class.translate-x-0]="true">
+            </div>
           </div>
-          <img src="faucet.png" alt="Illustration of Bitcoin Faucet" class="hero-image animate-in" />
         </div>
       </section>
 
       <!-- How It Works Section -->
-      <section class="steps-section" aria-labelledby="how-it-works-title">
-        <h2 class="section-title" id="how-it-works-title">How It Works</h2>
-        <div class="steps">
-          <article class="step" #stepElement>
-            <div class="step-icon" aria-hidden="true">1</div>
-            <h3>Enter Your Wallet Address</h3>
-            <p>Provide your Testnet Bitcoin address to receive rewards.</p>
-          </article>
-          <article class="step" #stepElement>
-            <div class="step-icon" aria-hidden="true">2</div>
-            <h3>Enter the Amount</h3>
-            <p>Specify the amount (less than 0.1 BTC test).</p>
-          </article>
-          <article class="step" #stepElement>
-            <div class="step-icon" aria-hidden="true">3</div>
-            <h3>Claim Your Bitcoin</h3>
-            <p>Submit your request and get your free Bitcoin instantly!</p>
-          </article>
+      <section class="py-16 px-4 md:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="step p-6 rounded-lg bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
+                 *ngFor="let step of steps">
+              <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                {{step.number}}
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                {{step.title}}
+              </h3>
+              <p class="text-gray-600">
+                {{step.description}}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
-  `,
-  styles: [`
-    .home-container {
-      width: 100%;
-    }
-
-    .hero-section {
-      padding: 2rem 2rem;  /* reduced from 4rem */
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .hero-content {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-image {
-      flex: 1;
-      max-width: 400px;  /* reduced from 500px */
-    }
-
-    .animate-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    .animate-item {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-text .animate-item:nth-child(1) {
-      animation: fadeInUp 0.8s ease-out 0.2s forwards;
-    }
-
-    .hero-text .animate-item:nth-child(2) {
-      animation: fadeInUp 0.8s ease-out 0.4s forwards;
-    }
-
-    .hero-text .animate-item:nth-child(3) {
-      animation: fadeInUp 0.8s ease-out 0.6s forwards;
-    }
-
-    .hero-image {
-      animation: fadeInUp 0.8s ease-out 0.8s forwards;
-    }
-
-    .step {
-      transition: box-shadow 0.2s ease;  /* faster transition, was likely 0.3s or higher */
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  `]
+  `
 })
-export class HomeComponent implements AfterViewInit {
-  ngAfterViewInit() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.3 });
-
-    document.querySelectorAll('.step').forEach((step) => {
-      observer.observe(step);
-    });
-  }
+export class HomeComponent {
+  steps = [
+    {
+      number: 1,
+      title: 'Enter Your Wallet Address',
+      description: 'Provide your Testnet Bitcoin address to receive rewards.'
+    },
+    {
+      number: 2,
+      title: 'Enter the Amount',
+      description: 'Specify the amount (less than 0.1 BTC test).'
+    },
+    {
+      number: 3,
+      title: 'Claim Your Bitcoin',
+      description: 'Submit your request and get your free Bitcoin instantly!'
+    }
+  ];
 }
