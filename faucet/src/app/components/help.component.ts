@@ -1,92 +1,156 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-help',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   template: `
-    <div class="max-w-4xl mx-auto px-4 py-8">
-      <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Help & FAQs</h2>
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12">
+      <div class="max-w-5xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+            Help Center
+          </h1>
+          <p class="mt-4 text-xl text-gray-500">
+            Everything you need to know about using our Bitcoin Testnet Faucet
+          </p>
+        </div>
+        <!-- Quick Start Guide -->
+        <div
+          class="bg-white rounded-2xl shadow-xl p-8 mb-10 transform hover:scale-[1.02] transition-transform duration-300"
+        >
+          <h3 class="text-2xl font-bold text-primary mb-6">
+            Quick Start Guide
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div
+                class="flex items-center space-x-4 p-4 bg-primary/5 rounded-xl"
+              >
+                <div
+                  class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold"
+                >
+                  1
+                </div>
+                <p class="text-gray-700">
+                  Navigate to the
+                  <a
+                    [routerLink]="['/claim']"
+                    class="text-primary hover:text-primary-dark font-medium"
+                    >Claim page</a
+                  >
+                </p>
+              </div>
+              <div
+                class="flex items-center space-x-4 p-4 bg-primary/5 rounded-xl"
+              >
+                <div
+                  class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold"
+                >
+                  2
+                </div>
+                <p class="text-gray-700">Enter your Bitcoin Testnet address</p>
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div
+                class="flex items-center space-x-4 p-4 bg-primary/5 rounded-xl"
+              >
+                <div
+                  class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold"
+                >
+                  3
+                </div>
+                <p class="text-gray-700">
+                  Specify amount (max:
+                  <span class="font-semibold">0.001 BTC</span>)
+                </p>
+              </div>
+              <div
+                class="flex items-center space-x-4 p-4 bg-primary/5 rounded-xl"
+              >
+                <div
+                  class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold"
+                >
+                  4
+                </div>
+                <p class="text-gray-700">
+                  Click "Claim Bitcoin" and wait for confirmation
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- How to Use Section -->
-      <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-        <h3 class="text-xl font-semibold text-primary mb-4">How to Use This Faucet?</h3>
-        <ol class="space-y-4 text-gray-600">
-          <li class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">1</span>
-            <span>Go to the <a [routerLink]="['/claim']" class="text-primary hover:underline">Claim</a> page.</span>
-          </li>
-          <li class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">2</span>
-            <span>Enter your Bitcoin Testnet address.</span>
-          </li>
-          <li class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">3</span>
-            <span>Specify the amount (up to <strong>0.001 BTC</strong>).</span>
-          </li>
-          <li class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">4</span>
-            <span>Click the "Claim Bitcoin" button and wait for the transaction to complete.</span>
-          </li>
-        </ol>
-      </div>
+        <!-- FAQs -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10">
+          <h3 class="text-2xl font-bold text-primary mb-6">
+            Frequently Asked Questions
+          </h3>
+          <div class="grid gap-6">
+            <div
+              class="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300"
+            >
+              <h4 class="text-xl font-semibold text-gray-900 mb-3">
+                What is Bitcoin Testnet?
+              </h4>
+              <p class="text-gray-700 leading-relaxed">
+                Bitcoin Testnet is a parallel network designed for testing and
+                development. It mirrors the main Bitcoin network but uses
+                worthless coins, making it perfect for experimentation.
+              </p>
+            </div>
+            <div
+              class="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300"
+            >
+              <h4 class="text-xl font-semibold text-gray-900 mb-3">
+                How do I get started?
+              </h4>
+              <p class="text-gray-700 leading-relaxed">
+                Download a Testnet-compatible wallet like Electrum or Bitcoin
+                Core. Configure it for Testnet use, and you're ready to start
+                testing.
+              </p>
+            </div>
+            <div
+              class="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300"
+            >
+              <h4 class="text-xl font-semibold text-gray-900 mb-3">
+                Transaction Times
+              </h4>
+              <p class="text-gray-700 leading-relaxed">
+                Testnet transactions may take longer than mainnet due to fewer
+                miners. This is normal and part of the testing environment.
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <!-- FAQ Section -->
-      <div class="space-y-4">
-        <h3 class="text-xl font-semibold text-primary mb-4">Frequently Asked Questions</h3>
-
-        <div class="bg-white shadow-sm rounded-lg divide-y divide-gray-200">
-          <div class="p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">What is Bitcoin Testnet?</h4>
-            <p class="text-gray-600">
-              Bitcoin Testnet is a parallel blockchain used for testing and experimentation.
-              The coins on this network have no real-world value.
-            </p>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">How do I get a Bitcoin Testnet wallet?</h4>
-            <p class="text-gray-600">
-              You can download Testnet-compatible wallets such as Electrum or Bitcoin Core.
-              Make sure the wallet is configured to use Testnet.
-            </p>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">Can I use Testnet Bitcoin on the Mainnet?</h4>
-            <p class="text-gray-600">
-              No, Testnet Bitcoins are only valid on the Testnet and cannot be used on the Bitcoin Mainnet.
-            </p>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">Why is my transaction taking time?</h4>
-            <p class="text-gray-600">
-              Testnet transactions rely on Testnet miners. If there are fewer miners, transactions may take longer.
-              This is normal for Testnet.
-            </p>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">Is there a limit to how much I can claim?</h4>
-            <p class="text-gray-600">
-              Yes, the maximum amount per claim is <strong>0.001 BTC</strong> to ensure fair usage for everyone.
-            </p>
+        <!-- Support Section -->
+        <div
+          class="bg-gradient-to-r from-primary to-primary-dark rounded-2xl shadow-xl p-8 text-white"
+        >
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <div>
+              <h3 class="text-2xl font-bold mb-4">Need Help?</h3>
+              <p class="text-white/90 mb-4">
+                Join our community for support and discussions
+              </p>
+            </div>
+            <a
+              href="https://www.blockcore.net/discord"
+              target="_blank"
+              class="inline-flex items-center px-6 py-3 bg-white text-primary rounded-xl hover:bg-gray-100 transition-colors duration-300"
+            >
+              Join Discord
+            </a>
           </div>
         </div>
       </div>
-
-      <!-- Contact Section -->
-      <div class="mt-8 bg-primary/5 rounded-lg p-6 border border-primary/10">
-        <h3 class="text-xl font-semibold text-primary mb-4">Need Further Assistance?</h3>
-        <p class="text-gray-600 mb-4">If you have additional questions or issues, reach out to us:</p>
-        <a href="https://www.blockcore.net/discord"
-           target="_blank"
-           class="inline-flex items-center text-primary hover:text-primary-dark">
-          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515..."/>
-          </svg>
-          Join our Discord
-        </a>
-      </div>
     </div>
-  `
+  `,
 })
-export class HelpComponent {}
+export class HelpComponent { }

@@ -15,117 +15,176 @@ export interface ClaimResponse {
     CommonModule
   ],
   template: `
-    <div class="max-w-2xl mx-auto px-4 py-8">
-      <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Claim Your Bitcoin</h2>
+    <div class="min-h-screen bg-gray-50 py-12">
+      <div class="max-w-3xl mx-auto px-4">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+          Bitcoin Testnet Faucet
+          </h1>
+          <p class="mt-4 text-xl text-gray-500">
+          Get test bitcoins instantly for development purposes
+          </p>
+        </div>
+        <!-- Main Form Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <form (ngSubmit)="submitClaim()" #claimForm="ngForm" class="space-y-8">
+            <!-- Bitcoin Address Field -->
+            <div>
+              <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">
+                Bitcoin Address
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  [(ngModel)]="address"
+                  #addressInput="ngModel"
+                  (blur)="addressTouched.set(true)"
+                  [class]="'w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ' +
+                          (addressInput.invalid && shouldShowError(addressTouched())
+                            ? 'border-red-300 bg-red-50'
+                            : 'border-gray-200 focus:border-[#086c81] focus:ring-2 focus:ring-blue-200')"
+                  placeholder="Enter your Bitcoin testnet address"
+                  required
+                  [disabled]="isSubmitting()"
+                />
+                <div *ngIf="addressInput.invalid && shouldShowError(addressTouched())"
+                     class="text-red-500 text-sm mt-1 animate-fade-in">
+                  Please enter a valid Bitcoin address
+                </div>
+              </div>
+            </div>
 
-      <form (ngSubmit)="submitClaim()" #claimForm="ngForm" class="bg-white shadow-lg rounded-lg p-6 space-y-6">
-        <!-- Bitcoin Address Input -->
-        <div class="space-y-2">
-          <label for="address" class="block text-sm font-medium text-gray-700">Bitcoin Address</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            [(ngModel)]="address"
-            #addressInput="ngModel"
-            (blur)="addressTouched.set(true)"
-            [class]="'w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary focus:border-primary ' +
-                    (addressInput.invalid && shouldShowError(addressTouched()) ? 'border-red-500 bg-red-50' : 'border-gray-300')"
-            placeholder="Enter your Bitcoin address"
-            required
-            [disabled]="isSubmitting()"
-          />
-          <div *ngIf="addressInput.invalid && shouldShowError(addressTouched())"
-               class="text-sm text-red-600">
-            Bitcoin address is required.
+            <!-- Amount Selection -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-3">
+                Select Amount (BTC)
+              </label>
+              <div class="grid grid-cols-3 gap-4 mb-4">
+                <button type="button"
+                        *ngFor="let amt of [0.001, 0.01, 0.1]"
+                        (click)="setAmount(amt)"
+                        [class]="'py-3 px-4 rounded-lg text-center transition-all duration-200 ' +
+                                (amount() === amt
+                                  ? 'bg-[#086c81] text-white shadow-lg'
+                                  : 'bg-gray-100 hover:bg-gray-200 text-gray-800')">
+                  {{amt}} BTC
+                </button>
+              </div>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                [(ngModel)]="amount"
+                #amountInput="ngModel"
+                (blur)="amountTouched.set(true)"
+                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="Or enter custom amount"
+                min="0.00001"
+                max="0.1"
+                step="0.00001"
+                required
+                [disabled]="isSubmitting()"
+              />
+            </div>
+
+            <!-- CAPTCHA Section -->
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <label class="block text-sm font-semibold text-gray-700 mb-3">
+                Verify you're human
+              </label>
+              <div class="flex items-center space-x-4">
+                <div class="bg-white p-3 rounded-lg shadow text-lg font-medium">
+                  {{captchaQuestion}}
+                </div>
+                <input
+                  type="text"
+                  id="captcha"
+                  name="captcha"
+                  [(ngModel)]="captchaAnswer"
+                  #captchaInput="ngModel"
+                  class="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#086c81] focus:ring-2 focus:ring-blue-200"
+                  placeholder="Enter the answer"
+                  required
+                  [disabled]="isSubmitting()"
+                />
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    [disabled]="isSubmitting() || claimForm.invalid"
+                    class="w-full py-4 px-6 text-lg font-semibold text-white bg-[#086c81] rounded-lg
+                           hover:bg-[#086c81] transition-colors duration-200
+                           disabled:bg-gray-400 disabled:cursor-not-allowed
+                           focus:outline-none focus:ring-4 focus:ring-blue-200">
+              {{ isSubmitting() ? 'Processing...' : 'Claim Testnet Bitcoin' }}
+            </button>
+          </form>
+
+          <!-- Response Messages -->
+          <div *ngIf="submissionStatus()"
+               [@fadeInOut]
+               [class]="'mt-6 p-6 rounded-lg ' +
+                        (submissionStatus()?.type === 'success'
+                          ? 'bg-green-50 border-2 border-green-200'
+                          : 'bg-red-50 border-2 border-red-200')">
+            <div class="flex items-start">
+              <div [class]="'p-2 rounded-full ' +
+                           (submissionStatus()?.type === 'success' ? 'bg-green-100' : 'bg-red-100')">
+                <svg *ngIf="submissionStatus()?.type === 'success'"
+                     class="w-6 h-6 text-green-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7" />
+                </svg>
+                <svg *ngIf="submissionStatus()?.type === 'error'"
+                     class="w-6 h-6 text-red-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 [class]="'text-lg font-medium ' +
+                            (submissionStatus()?.type === 'success'
+                              ? 'text-green-800'
+                              : 'text-red-800')">
+                  {{submissionStatus()?.type === 'success' ? 'Success!' : 'Error'}}
+                </h3>
+                <p class="mt-2 text-sm text-gray-600">{{submissionStatus()?.message}}</p>
+                <p *ngIf="submissionStatus()?.transactionId"
+                   class="mt-2 text-sm text-gray-600">
+                  <span class="font-medium">Transaction ID:</span>
+                  <code class="ml-2 p-1 bg-gray-100 rounded">{{submissionStatus()?.transactionId}}</code>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Preset Amount Buttons -->
-        <div class="grid grid-cols-3 gap-3">
-          <button type="button"
-                  *ngFor="let amount of [0.001, 0.01, 0.1]"
-                  (click)="setAmount(amount)"
-                  class="px-4 py-2 text-sm font-medium text-primary bg-primary-light rounded-md hover:bg-primary hover:text-white transition-colors">
-            {{amount}} BTC
-          </button>
-        </div>
-
-        <!-- Amount Input -->
-        <div class="space-y-2">
-          <label for="amount" class="block text-sm font-medium text-gray-700">Amount (max: 0.1 BTC)</label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            [(ngModel)]="amount"
-            #amountInput="ngModel"
-            (blur)="amountTouched.set(true)"
-            [class]="'w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary focus:border-primary ' +
-                    (amountInput.invalid && shouldShowError(amountTouched()) ? 'border-red-500 bg-red-50' : 'border-gray-300')"
-            placeholder="Enter amount (e.g., 0.1)"
-            min="0.00001"
-            max="0.1"
-            step="0.00001"
-            required
-            [disabled]="isSubmitting()"
-          />
-          <div *ngIf="amountInput.invalid && shouldShowError(amountTouched())"
-               class="text-sm text-red-600">
-            Please enter a valid amount between 0.00001 and 0.1 BTC.
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">About This Faucet</h3>
+          <div class="prose prose-blue">
+            <ul class="space-y-2 text-gray-600">
+              <li>This faucet provides testnet bitcoins for development purposes</li>
+              <li>Maximum claim: <strong>0.1 BTC</strong> per transaction</li>
+              <li>Minimum claim: <strong>0.00001 BTC</strong></li>
+              <li>Please use responsibly to ensure availability for everyone</li>
+            </ul>
           </div>
         </div>
-
-        <!-- CAPTCHA -->
-        <div class="form-group">
-          <label for="captcha">CAPTCHA: {{ captchaQuestion }}</label>
-          <input
-            type="text"
-            id="captcha"
-            name="captcha"
-            [(ngModel)]="captchaAnswer"
-            #captchaInput="ngModel"
-            (blur)="captchaTouched.set(true)"
-            [class.invalid]="captchaInput.invalid && shouldShowError(captchaTouched())"
-            placeholder="Enter the answer"
-            required
-            [class]="'w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary focus:border-primary ' +
-                    (amountInput.invalid && shouldShowError(amountTouched()) ? 'border-red-500 bg-red-50' : 'border-gray-300')"            [disabled]="isSubmitting()"
-          />
-          <div *ngIf="captchaInput.invalid && shouldShowError(captchaTouched())" class="text-sm text-red-600">
-            CAPTCHA answer is required.
-          </div>
-          <div *ngIf="captchaError()" class="text-sm text-red-600">
-            Incorrect CAPTCHA answer. Please try again.
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit"
-                [disabled]="isSubmitting() || claimForm.invalid"
-                class="w-full py-3 px-4 text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
-          {{ isSubmitting() ? 'Submitting...' : 'Claim Bitcoin' }}
-        </button>
-      </form>
-
-      <!-- Response Messages -->
-      <div *ngIf="submissionStatus()"
-           [class]="'mt-6 p-4 rounded-lg text-center ' +
-           (submissionStatus()?.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800')">
-        <p class="font-medium">{{ submissionStatus()?.message }}</p>
-        <p *ngIf="submissionStatus()?.transactionId" class="mt-2 text-sm">
-          <strong>Transaction ID:</strong> {{ submissionStatus()?.transactionId }}
-        </p>
-      </div>
-
-      <!-- Description Box -->
-      <div class="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-3">About This Faucet</h3>
-        <p class="text-gray-600">
-          This faucet is designed to provide small amounts of Testnet Bitcoins for testing purposes.
-          The maximum claim per transaction is <strong>0.1 BTC</strong>.
-          Please use responsibly to ensure fair access for everyone.
-        </p>
       </div>
     </div>
   `
