@@ -12,7 +12,7 @@ services:
 
   indexer:
     container_name: tbtc-indexer
-    image: blockcore/indexer-angor:0.2.74
+    image: blockcore/indexer-angor:0.2.75
     mem_limit: 2048m
     cpus: 0.200
     environment:
