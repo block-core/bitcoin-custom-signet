@@ -38,7 +38,7 @@ services:
 
   chain:
     container_name: tbtc-chain
-    #image: blockcore/bitcoin-signet:latest
+    #image: blockcore/bitcoin-angornet:latest
     build: .
     mem_limit: 2048m
     cpus: 0.8 # how many cpus to use
