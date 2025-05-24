@@ -18,6 +18,7 @@ namespace BitcoinFaucetApi.Controllers
         private readonly Mnemonic _mnemonic;
         private readonly ExtKey _masterKey;
         private readonly IIndexerService _indexerService;
+        private static readonly SemaphoreSlim _sendSemaphore = new SemaphoreSlim(1, 1);
 
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
@@ -74,6 +75,7 @@ namespace BitcoinFaucetApi.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
         {
+            await _sendSemaphore.WaitAsync();
             try
             {
                 // Validate the input
@@ -130,6 +132,10 @@ namespace BitcoinFaucetApi.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+            finally
+            {
+                _sendSemaphore.Release();
             }
         }
 
