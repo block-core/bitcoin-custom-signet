@@ -86,17 +86,17 @@ jobs:
    #     zip -r ${{env.RELEASE_NAME}} ./${{env.PROJECT_NAME}}/bin/publish/
 
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: faucet-api
-        path: "${{env.RELEASE_PATH}}"
+        path: "${{env.RELEASE_PATH}}-${{ matrix.runtime }}"
 
     - name: Release
       uses: sondreb/action-release@main
       with:
         commit: 'main'
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: "${{env.RELEASE_PATH}}"
+        files: "${{env.RELEASE_PATH}}-${{ matrix.runtime }}"
         draft: true
         prerelease: false
         body: ''

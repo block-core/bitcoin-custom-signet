@@ -18,7 +18,10 @@ namespace BitcoinFaucetApi.Controllers
         private readonly Mnemonic _mnemonic;
         private readonly ExtKey _masterKey;
         private readonly IIndexerService _indexerService;
-
+        private static readonly HashSet<UtxoData> _utxoPool = [];
+        private static readonly HashSet<UtxoData> _utxoUsed = [];
+        private static readonly object _lockObject = new();
+        private static readonly int _poolThreshold = 20;
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
             if (bitcoinSettings == null || bitcoinSettings.Value == null)
@@ -70,7 +73,30 @@ namespace BitcoinFaucetApi.Controllers
         {
             return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
         }
+        private async Task RefillUtxoPool(BitcoinAddress fromAddress)
+        {
+            lock (_lockObject) {
+                if (_utxoPool.Count > _poolThreshold) return;
+            }
+            var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
+            lock (_lockObject)
+            {
+                _utxoUsed.IntersectWith(utxos);
+                _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+            }
+        }
+        private async Task<List<UtxoData>> GetPoolUtxos(int count, BitcoinAddress fromAddress)
+        {
+            await RefillUtxoPool(fromAddress);
 
+            lock (_lockObject)
+            {
+                var utxosToUse = _utxoPool.Take(count).ToList();
+                _utxoPool.ExceptWith(utxosToUse);
+                _utxoUsed.UnionWith(utxosToUse);
+                return utxosToUse;
+            }
+        }
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
         {
@@ -87,7 +113,7 @@ namespace BitcoinFaucetApi.Controllers
                 var privateKey = _masterKey.Derive(keyPath).PrivateKey;
                 var fromAddress = privateKey.PubKey.GetAddress(ScriptPubKeyType.Segwit, _network);
 
-                var utxos = await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 20);
+                var utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
                     return BadRequest("No UTXOs available for the address.");
@@ -97,7 +123,7 @@ namespace BitcoinFaucetApi.Controllers
                 {
                     var outPoint = new OutPoint(uint256.Parse(utxo.outpoint.transactionId), utxo.outpoint.outputIndex);
                     return new Coin(outPoint, new TxOut(Money.Satoshis(utxo.value), fromAddress.ScriptPubKey));
-                }).Take(2).ToList();
+                }).ToList();
 
                 var txBuilder = _network.CreateTransactionBuilder();
                 var tx = txBuilder

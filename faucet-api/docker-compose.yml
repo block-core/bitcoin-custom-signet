@@ -19,7 +19,7 @@ services:
       DataConfig__UseDefaultPath: "true"
       Bitcoin__Mnemonic: "margin radio diamond leg loud street announce guitar video shiver speed eyebrow"
       Bitcoin__Network: "TestNet"
-      Bitcoin__IndexerUrl: "https://tbtc.indexer.angor.io"
+      Bitcoin__IndexerUrl: "https://test.indexer.angor.io"
       Bitcoin__FeeRate: 10001
       Bitcoin__ChangeAddressIndex: 0
     restart: unless-stopped
