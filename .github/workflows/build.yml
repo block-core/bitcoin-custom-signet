@@ -96,7 +96,7 @@ jobs:
       with:
         commit: 'main'
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: "${{env.RELEASE_PATH}}-${{ matrix.runtime }}"
+        files: "${{env.RELEASE_PATH}}"
         draft: true
         prerelease: false
         body: ''
