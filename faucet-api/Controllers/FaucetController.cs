@@ -113,7 +113,7 @@ namespace BitcoinFaucetApi.Controllers
                 var privateKey = _masterKey.Derive(keyPath).PrivateKey;
                 var fromAddress = privateKey.PubKey.GetAddress(ScriptPubKeyType.Segwit, _network);
 
-                var utxos = await GetPoolUtxos(1, fromAddress);
+                var utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
                     return BadRequest("No UTXOs available for the address.");
