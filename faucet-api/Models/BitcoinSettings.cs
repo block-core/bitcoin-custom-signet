@@ -1,6 +1,7 @@
 
 public class BitcoinSettings
 {
+    public string Indexer { get; set; }
     public string IndexerUrl { get; set; }
     public string Mnemonic { get; set; }
     public string Network { get; set; }
