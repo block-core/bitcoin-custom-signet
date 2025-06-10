@@ -3,7 +3,7 @@ version: '3.8'
 services:
   faucet-api:
     container_name: faucet-api
-    image: blockcore/faucet-api:1.0.15
+    image: blockcore/faucet-api:1.0.16
     mem_limit: 1024m
     cpus: 0.200
     environment:
