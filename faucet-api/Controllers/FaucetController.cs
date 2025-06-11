@@ -73,18 +73,25 @@ namespace BitcoinFaucetApi.Controllers
         {
             return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
         }
+
         private async Task RefillUtxoPool(BitcoinAddress fromAddress)
         {
-            lock (_lockObject) {
-                if (_utxoPool.Count > _poolThreshold) return;
-            }
-            var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
             lock (_lockObject)
             {
+                if (_utxoPool.Count > _poolThreshold) return;
+            }
+
+            var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
+            
+            lock (_lockObject)
+            {
+                if (_utxoPool.Count > _poolThreshold) return;
+                
                 _utxoUsed.IntersectWith(utxos);
                 _utxoPool.UnionWith(utxos.Except(_utxoUsed));
             }
         }
+
         private async Task<List<UtxoData>> GetPoolUtxos(int count, BitcoinAddress fromAddress)
         {
             await RefillUtxoPool(fromAddress);
@@ -97,6 +104,7 @@ namespace BitcoinFaucetApi.Controllers
                 return utxosToUse;
             }
         }
+
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
         {
