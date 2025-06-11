@@ -8,15 +8,32 @@ builder.Services.Configure<BitcoinSettings>(builder.Configuration.GetSection("Bi
 
 builder.Services.AddControllers();
 
-builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
+var bitcoinSettings = new BitcoinSettings();
+builder.Configuration.GetSection("Bitcoin").Bind(bitcoinSettings);
+if (bitcoinSettings.Indexer == "Mempool")
 {
-    var indexerUrl = builder.Configuration.GetSection("Bitcoin")["IndexerUrl"];
-    if (string.IsNullOrEmpty(indexerUrl))
+    builder.Services.AddHttpClient<IIndexerService, MempoolService>(client =>
     {
-        throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
-    }
-    client.BaseAddress = new Uri(indexerUrl);
-});
+        var indexerUrl = builder.Configuration.GetSection("Bitcoin")["IndexerUrl"];
+        if (string.IsNullOrEmpty(indexerUrl))
+        {
+            throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
+        }
+        client.BaseAddress = new Uri(indexerUrl);
+    });
+}
+else
+{
+    builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
+    {
+        var indexerUrl = builder.Configuration.GetSection("Bitcoin")["IndexerUrl"];
+        if (string.IsNullOrEmpty(indexerUrl))
+        {
+            throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
+        }
+        client.BaseAddress = new Uri(indexerUrl);
+    });
+}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
