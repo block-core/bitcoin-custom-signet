@@ -140,7 +140,7 @@ namespace BitcoinFaucetApi.Controllers
                 var utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
-                    return BadRequest("No UTXOs available for the address, try again later.");
+                    return StatusCode(503, "No UTXOs available for the address, try again later.");
                 }
 
                 var coins = utxos.Select(utxo =>
