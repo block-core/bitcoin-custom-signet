@@ -86,7 +86,7 @@ namespace BitcoinFaucetApi.Controllers
                     if (!_poolIsReplenishing)
                     {
                         _poolIsReplenishing = true;
-                        Task.Run(() => { ReplanishUtxoPool(fromAddress); });
+                        Task.Run(() => { ReplenishUtxoPool(fromAddress); });
                     }
                 }
 
@@ -104,7 +104,7 @@ namespace BitcoinFaucetApi.Controllers
             }
         }
 
-        private async Task ReplanishUtxoPool(BitcoinAddress fromAddress)
+        private async Task ReplenishUtxoPool(BitcoinAddress fromAddress)
         {
             try
             {
