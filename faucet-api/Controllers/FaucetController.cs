@@ -22,6 +22,9 @@ namespace BitcoinFaucetApi.Controllers
         private static readonly HashSet<UtxoData> _utxoUsed = [];
         private static readonly object _lockObject = new();
         private static readonly int _poolThreshold = 20;
+        private static readonly int _poolReplenishThreshold = 30;
+        private static bool _poolIsReplenishing = false;
+
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
             if (bitcoinSettings == null || bitcoinSettings.Value == null)
@@ -78,6 +81,15 @@ namespace BitcoinFaucetApi.Controllers
         {
             lock (_lockObject)
             {
+                if (_utxoPool.Count > _poolThreshold && _utxoPool.Count < _poolReplenishThreshold)
+                {
+                    if (!_poolIsReplenishing)
+                    {
+                        _poolIsReplenishing = true;
+                        Task.Run(() => { ReplanishUtxoPool(fromAddress); });
+                    }
+                }
+
                 if (_utxoPool.Count > _poolThreshold) return;
             }
 
@@ -89,6 +101,31 @@ namespace BitcoinFaucetApi.Controllers
                 
                 _utxoUsed.IntersectWith(utxos);
                 _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+            }
+        }
+
+        private async Task ReplanishUtxoPool(BitcoinAddress fromAddress)
+        {
+            try
+            {
+                if (_poolIsReplenishing == false) return; // what triggered this?
+                if (_utxoPool.Count >= _poolReplenishThreshold) { return; }
+
+                var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
+
+                lock (_lockObject)
+                {
+                    _utxoUsed.IntersectWith(utxos);
+                    _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                _poolIsReplenishing = false;
             }
         }
 
