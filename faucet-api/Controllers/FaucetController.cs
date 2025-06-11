@@ -22,6 +22,8 @@ namespace BitcoinFaucetApi.Controllers
         private static readonly HashSet<UtxoData> _utxoUsed = [];
         private static readonly object _lockObject = new();
         private static readonly int _poolThreshold = 20;
+        private static bool _poolIsReplenishing = false;
+
         public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
         {
             if (bitcoinSettings == null || bitcoinSettings.Value == null)
@@ -74,30 +76,44 @@ namespace BitcoinFaucetApi.Controllers
             return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
         }
 
-        private async Task RefillUtxoPool(BitcoinAddress fromAddress)
+        private async Task ReplenishUtxoPool(BitcoinAddress fromAddress)
         {
-            lock (_lockObject)
+            try
             {
-                if (_utxoPool.Count > _poolThreshold) return;
-            }
+                if (_poolIsReplenishing == false) return; // what triggered this?
+                if (_utxoPool.Count >= _poolThreshold) { return; }
 
-            var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
-            
-            lock (_lockObject)
+                var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
+
+                lock (_lockObject)
+                {
+                    _utxoUsed.IntersectWith(utxos);
+                    _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+                }
+            }
+            catch (Exception e)
             {
-                if (_utxoPool.Count > _poolThreshold) return;
-                
-                _utxoUsed.IntersectWith(utxos);
-                _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                _poolIsReplenishing = false;
             }
         }
 
         private async Task<List<UtxoData>> GetPoolUtxos(int count, BitcoinAddress fromAddress)
         {
-            await RefillUtxoPool(fromAddress);
-
             lock (_lockObject)
             {
+                if (_utxoPool.Count < _poolThreshold)
+                {
+                    if (!_poolIsReplenishing)
+                    {
+                        _poolIsReplenishing = true;
+                        Task.Run(() => { ReplenishUtxoPool(fromAddress); });
+                    }
+                }
+
                 var utxosToUse = _utxoPool.Take(count).ToList();
                 _utxoPool.ExceptWith(utxosToUse);
                 _utxoUsed.UnionWith(utxosToUse);
@@ -124,7 +140,7 @@ namespace BitcoinFaucetApi.Controllers
                 var utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
-                    return BadRequest("No UTXOs available for the address.");
+                    return BadRequest("No UTXOs available for the address, try again later.");
                 }
 
                 var coins = utxos.Select(utxo =>
