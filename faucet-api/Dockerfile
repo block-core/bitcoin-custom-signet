@@ -21,4 +21,4 @@ RUN dotnet publish "./faucet-api.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "faucet-api.dll"]
+ENTRYPOINT ["dotnet", "faucet-api.dll", "--urls", "http://0.0.0.0:5500"]

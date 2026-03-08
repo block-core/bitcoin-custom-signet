@@ -67,6 +67,8 @@ COPY miner_imports /usr/local/bin
 COPY miner /usr/local/bin/miner
 COPY *.sh /usr/local/bin/
 COPY rpcauth.py /usr/local/bin/rpcauth.py
+# Fix Windows CRLF line endings that break shell script execution
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh /usr/local/bin/miner /usr/local/bin/*.sh /usr/local/bin/rpcauth.py
 RUN pip3 install setuptools
 
 RUN chmod +x /usr/local/bin/miner

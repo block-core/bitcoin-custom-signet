@@ -17,14 +17,14 @@ namespace BitcoinFaucetApi.Controllers
         private readonly Network _network;
         private readonly Mnemonic _mnemonic;
         private readonly ExtKey _masterKey;
-        private readonly IIndexerService _indexerService;
+        private readonly IBitcoinRpcService _rpcService;
         private static readonly HashSet<UtxoData> _utxoPool = [];
         private static readonly HashSet<UtxoData> _utxoUsed = [];
         private static readonly object _lockObject = new();
         private static readonly int _poolThreshold = 20;
         private static bool _poolIsReplenishing = false;
 
-        public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IIndexerService indexerService)
+        public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IBitcoinRpcService rpcService)
         {
             if (bitcoinSettings == null || bitcoinSettings.Value == null)
             {
@@ -32,11 +32,6 @@ namespace BitcoinFaucetApi.Controllers
             }
 
             _bitcoinSettings = bitcoinSettings.Value;
-
-            if (string.IsNullOrEmpty(_bitcoinSettings.IndexerUrl))
-            {
-                throw new ArgumentException("IndexerUrl is not configured in appsettings.json.", nameof(_bitcoinSettings.IndexerUrl));
-            }
 
             _network = Network.GetNetwork(_bitcoinSettings.Network.ToLower());
             if (_network == null)
@@ -67,13 +62,13 @@ namespace BitcoinFaucetApi.Controllers
                 throw new InvalidOperationException("Failed to derive the master key from the mnemonic.", ex);
             }
 
-            _indexerService = indexerService ?? throw new ArgumentNullException(nameof(indexerService), "IndexerService is not provided.");
+            _rpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService), "BitcoinRpcService is not provided.");
         }
 
         [HttpGet("send/{address}/{amount?}")]
-        public async Task<IActionResult> SendFunds(string address, long? amount)
+        public async Task<IActionResult> SendFunds(string address, decimal? amount)
         {
-            return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 20});
+            return await SendFunds(new SendRequest {ToAddress = address, Amount = amount ?? 0.001m});
         }
 
         private async Task ReplenishUtxoPool(BitcoinAddress fromAddress)
@@ -83,7 +78,9 @@ namespace BitcoinFaucetApi.Controllers
                 if (_poolIsReplenishing == false) return; // what triggered this?
                 if (_utxoPool.Count >= _poolThreshold) { return; }
 
-                var utxos = (await _indexerService.FetchUtxoAsync(fromAddress.ToString(), 0, 50)) ?? [];
+                // Use Bitcoin Core RPC (listunspent) instead of electrs for UTXO fetching.
+                // The faucet address has ~748k UTXOs which exceeds electrs's ability to return efficiently.
+                var utxos = await _rpcService.ListUnspentAsync(fromAddress.ToString(), 50);
 
                 lock (_lockObject)
                 {
@@ -103,17 +100,43 @@ namespace BitcoinFaucetApi.Controllers
 
         private async Task<List<UtxoData>> GetPoolUtxos(int count, BitcoinAddress fromAddress)
         {
+            bool needsSyncReplenish = false;
+
             lock (_lockObject)
             {
-                if (_utxoPool.Count < _poolThreshold)
+                if (_utxoPool.Count < count)
                 {
-                    if (!_poolIsReplenishing)
+                    // Pool doesn't have enough UTXOs — need a synchronous replenish
+                    needsSyncReplenish = true;
+                }
+                else if (_utxoPool.Count < _poolThreshold && !_poolIsReplenishing)
+                {
+                    // Pool is getting low — kick off async background replenish
+                    _poolIsReplenishing = true;
+                    Task.Run(() => { ReplenishUtxoPool(fromAddress); });
+                }
+            }
+
+            if (needsSyncReplenish)
+            {
+                // Wait for replenishment before continuing
+                if (!_poolIsReplenishing)
+                {
+                    _poolIsReplenishing = true;
+                    await ReplenishUtxoPool(fromAddress);
+                }
+                else
+                {
+                    // Another thread is replenishing — wait briefly for it
+                    for (int i = 0; i < 50 && _poolIsReplenishing; i++)
                     {
-                        _poolIsReplenishing = true;
-                        Task.Run(() => { ReplenishUtxoPool(fromAddress); });
+                        await Task.Delay(100);
                     }
                 }
+            }
 
+            lock (_lockObject)
+            {
                 var utxosToUse = _utxoPool.Take(count).ToList();
                 _utxoPool.ExceptWith(utxosToUse);
                 _utxoUsed.UnionWith(utxosToUse);
@@ -140,7 +163,7 @@ namespace BitcoinFaucetApi.Controllers
                 var utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
-                    return BadRequest("No UTXOs available for the address, try again later.");
+                    return StatusCode(503, "No UTXOs available for the address, try again later.");
                 }
 
                 var coins = utxos.Select(utxo =>
@@ -164,7 +187,7 @@ namespace BitcoinFaucetApi.Controllers
                 }
 
                 string transactionHex = tx.ToHex();
-                var broadcastResult = await _indexerService.PublishTransactionAsync(transactionHex);
+                var broadcastResult = await _rpcService.SendRawTransactionAsync(transactionHex);
 
                 if (!string.IsNullOrEmpty(broadcastResult))
                 {
@@ -183,69 +206,26 @@ namespace BitcoinFaucetApi.Controllers
             }
         }
 
-        [HttpGet("address/balance")]
-        public async Task<IActionResult> GetAddressBalance([FromQuery] string address, [FromQuery] bool includeUnconfirmed = false)
-        {
-            try
-            {
-                var balances = await _indexerService.GetAdressBalancesAsync(new List<AddressInfo> { new AddressInfo { Address = address } }, includeUnconfirmed);
-                return Ok(balances);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("utxos")]
-        public async Task<IActionResult> GetUnspentTransactions([FromQuery] string address, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
-        {
-            try
-            {
-                var utxos = await _indexerService.FetchUtxoAsync(address, offset, limit);
-                return Ok(utxos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("transaction/hex/{transactionId}")]
-        public async Task<IActionResult> GetTransactionHex([FromRoute] string transactionId)
-        {
-            try
-            {
-                var hex = await _indexerService.GetTransactionHexByIdAsync(transactionId);
-                return Ok(new { Hex = hex });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("transaction/info/{transactionId}")]
-        public async Task<IActionResult> GetTransactionInfo([FromRoute] string transactionId)
-        {
-            try
-            {
-                var transactionInfo = await _indexerService.GetTransactionInfoByIdAsync(transactionId);
-                return Ok(transactionInfo);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            }
-        }
-
         [HttpGet("network/status")]
         public async Task<IActionResult> CheckNetworkStatus()
         {
             try
             {
-                var (isOnline, genesisHash) = await _indexerService.CheckIndexerNetwork();
-                return Ok(new { IsOnline = isOnline, GenesisHash = genesisHash });
+                var info = await _rpcService.GetBlockchainInfoAsync();
+                var blockTime = DateTimeOffset.FromUnixTimeSeconds(info.Time);
+                var age = DateTimeOffset.UtcNow - blockTime;
+                var isOnline = age.TotalMinutes <= 30;
+
+                return Ok(new
+                {
+                    IsOnline = isOnline,
+                    Chain = info.Chain,
+                    Height = info.Height,
+                    BestBlockHash = info.BestBlockHash,
+                    LastBlockTime = blockTime.UtcDateTime,
+                    LastBlockAgeMins = Math.Round(age.TotalMinutes, 1),
+                    InitialBlockDownload = info.InitialBlockDownload
+                });
             }
             catch (Exception ex)
             {
