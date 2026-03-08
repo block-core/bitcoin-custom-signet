@@ -18,13 +18,23 @@ services:
       Bitcoin__RpcUser: "rpcuser"
       Bitcoin__RpcPassword: "rpcpassword"
       Bitcoin__RpcWallet: "custom_signet"
+      VIRTUAL_HOST: faucettmp.angor.io
+      VIRTUAL_PORT: 5500
+      VIRTUAL_PROTO: http
+      VIRTUAL_NETWORK: proxy
+      LETSENCRYPT_HOST: faucettmp.angor.io
+      LETSENCRYPT_EMAIL: admin@blockcore.net
     restart: unless-stopped
     ports:
       - "5500:5500"
     networks:
       - btcnetwork
+      - proxy
 
 networks:
   btcnetwork:
     external: true
     name: btcnetwork
+  proxy:
+    external: true
+    name: proxy
