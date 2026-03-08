@@ -5,3 +5,6 @@
 /.vs
 .vscode/launch.json
 .vscode/tasks.json
+
+# Windows NUL device artifact
+nul

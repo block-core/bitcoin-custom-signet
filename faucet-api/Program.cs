@@ -1,5 +1,6 @@
 using BitcoinFaucetApi.Services;
 using Microsoft.OpenApi.Models;
+using NBitcoin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,14 +9,10 @@ builder.Services.Configure<BitcoinSettings>(builder.Configuration.GetSection("Bi
 
 builder.Services.AddControllers();
 
-builder.Services.AddHttpClient<IIndexerService, IndexerService>(client =>
+builder.Services.AddHttpClient<IBitcoinRpcService, BitcoinRpcService>(client =>
 {
-    var indexerUrl = builder.Configuration.GetSection("Bitcoin")["IndexerUrl"];
-    if (string.IsNullOrEmpty(indexerUrl))
-    {
-        throw new ArgumentException("IndexerUrl is not configured in appsettings.json.");
-    }
-    client.BaseAddress = new Uri(indexerUrl);
+    // Generous timeout to accommodate rescanblockchain on startup
+    client.Timeout = TimeSpan.FromMinutes(30);
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -61,5 +58,30 @@ app.UseSwaggerUI(c =>
 app.UseCors("AllowAll");
 
 app.MapControllers();
+
+// Ensure Bitcoin Core wallet is set up with the faucet address before handling requests
+using (var scope = app.Services.CreateScope())
+{
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    try
+    {
+        var bitcoinSettings = builder.Configuration.GetSection("Bitcoin");
+        var mnemonic = new Mnemonic(bitcoinSettings["Mnemonic"]!);
+        var network = Network.GetNetwork(bitcoinSettings["Network"]!.ToLower())!;
+        var changeIndex = int.Parse(bitcoinSettings["ChangeAddressIndex"] ?? "0");
+
+        var keyPath = new KeyPath($"m/84'/1'/0'/0/{changeIndex}");
+        var address = mnemonic.DeriveExtKey().Derive(keyPath).PrivateKey.PubKey
+            .GetAddress(ScriptPubKeyType.Segwit, network).ToString();
+
+        var rpcService = scope.ServiceProvider.GetRequiredService<IBitcoinRpcService>();
+        await rpcService.EnsureWalletSetupAsync(address);
+        logger.LogInformation($"Wallet setup complete. Faucet address: {address}");
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning($"Wallet setup on startup failed (will retry on first request): {ex.Message}");
+    }
+}
 
 app.Run();
