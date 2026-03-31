@@ -18,13 +18,17 @@ namespace BitcoinFaucetApi.Controllers
         private readonly Mnemonic _mnemonic;
         private readonly ExtKey _masterKey;
         private readonly IBitcoinRpcService _rpcService;
+        private readonly IUtxoReservationService _utxoReservationService;
         private static readonly HashSet<UtxoData> _utxoPool = [];
         private static readonly HashSet<UtxoData> _utxoUsed = [];
         private static readonly object _lockObject = new();
         private static readonly int _poolThreshold = 20;
         private static bool _poolIsReplenishing = false;
 
-        public FaucetController(IOptions<BitcoinSettings> bitcoinSettings, IBitcoinRpcService rpcService)
+        public FaucetController(
+            IOptions<BitcoinSettings> bitcoinSettings,
+            IBitcoinRpcService rpcService,
+            IUtxoReservationService utxoReservationService)
         {
             if (bitcoinSettings == null || bitcoinSettings.Value == null)
             {
@@ -63,6 +67,7 @@ namespace BitcoinFaucetApi.Controllers
             }
 
             _rpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService), "BitcoinRpcService is not provided.");
+            _utxoReservationService = utxoReservationService ?? throw new ArgumentNullException(nameof(utxoReservationService), "UtxoReservationService is not provided.");
         }
 
         [HttpGet("send/{address}/{amount?}")]
@@ -81,11 +86,12 @@ namespace BitcoinFaucetApi.Controllers
                 // Use Bitcoin Core RPC (listunspent) instead of electrs for UTXO fetching.
                 // The faucet address has ~748k UTXOs which exceeds electrs's ability to return efficiently.
                 var utxos = await _rpcService.ListUnspentAsync(fromAddress.ToString(), 50);
+                var availableUtxos = _utxoReservationService.FilterAvailable(utxos).ToList();
 
                 lock (_lockObject)
                 {
-                    _utxoUsed.IntersectWith(utxos);
-                    _utxoPool.UnionWith(utxos.Except(_utxoUsed));
+                    _utxoUsed.IntersectWith(availableUtxos);
+                    _utxoPool.UnionWith(availableUtxos.Except(_utxoUsed));
                 }
             }
             catch (Exception e)
@@ -137,16 +143,44 @@ namespace BitcoinFaucetApi.Controllers
 
             lock (_lockObject)
             {
-                var utxosToUse = _utxoPool.Take(count).ToList();
+                var utxosToUse = _utxoPool
+                    .Where(utxo => !_utxoReservationService.IsReserved(utxo.outpoint))
+                    .Take(count)
+                    .ToList();
+
+                if (utxosToUse.Count > 0 && !_utxoReservationService.TryReserve(utxosToUse.Select(utxo => utxo.outpoint)))
+                {
+                    return [];
+                }
+
                 _utxoPool.ExceptWith(utxosToUse);
                 _utxoUsed.UnionWith(utxosToUse);
                 return utxosToUse;
             }
         }
 
+        private void ReturnPoolUtxos(IEnumerable<UtxoData> utxos)
+        {
+            var utxoList = utxos.ToList();
+            if (!utxoList.Any())
+            {
+                return;
+            }
+
+            _utxoReservationService.Release(utxoList.Select(utxo => utxo.outpoint));
+
+            lock (_lockObject)
+            {
+                _utxoUsed.ExceptWith(utxoList);
+                _utxoPool.UnionWith(utxoList);
+            }
+        }
+
         [HttpPost("send")]
         public async Task<IActionResult> SendFunds([FromBody] SendRequest request)
         {
+            List<UtxoData> utxos = [];
+
             try
             {
                 // Validate the input
@@ -160,7 +194,7 @@ namespace BitcoinFaucetApi.Controllers
                 var privateKey = _masterKey.Derive(keyPath).PrivateKey;
                 var fromAddress = privateKey.PubKey.GetAddress(ScriptPubKeyType.Segwit, _network);
 
-                var utxos = await GetPoolUtxos(2, fromAddress);
+                utxos = await GetPoolUtxos(2, fromAddress);
                 if (utxos == null || !utxos.Any())
                 {
                     return StatusCode(503, "No UTXOs available for the address, try again later.");
@@ -183,6 +217,7 @@ namespace BitcoinFaucetApi.Controllers
 
                 if (!txBuilder.Verify(tx))
                 {
+                    ReturnPoolUtxos(utxos);
                     return StatusCode(500, "Transaction validation failed.");
                 }
 
@@ -191,8 +226,11 @@ namespace BitcoinFaucetApi.Controllers
 
                 if (!string.IsNullOrEmpty(broadcastResult))
                 {
+                    ReturnPoolUtxos(utxos);
                     return StatusCode(500, $"Failed to broadcast transaction: {broadcastResult}");
                 }
+
+                _utxoReservationService.Release(utxos.Select(utxo => utxo.outpoint));
 
                 return Ok(new { TransactionId = tx.GetHash().ToString() });
             }
@@ -202,6 +240,11 @@ namespace BitcoinFaucetApi.Controllers
             }
             catch (Exception ex)
             {
+                if (utxos.Any())
+                {
+                    ReturnPoolUtxos(utxos);
+                }
+
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }

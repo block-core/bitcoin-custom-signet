@@ -45,6 +45,11 @@ namespace BitcoinFaucetApi.Services
         /// Safe to call multiple times — idempotent.
         /// </summary>
         Task EnsureWalletSetupAsync(string address);
+
+        /// <summary>
+        /// Fetches wallet UTXOs using Bitcoin Core's listunspent RPC.
+        /// </summary>
+        Task<List<UtxoData>> ListWalletUnspentAsync(int maxCount = 1000, long? maximumAmountSats = null, int minConfirmations = 1);
     }
 
     public class BitcoinRpcService : IBitcoinRpcService
@@ -291,6 +296,65 @@ namespace BitcoinFaucetApi.Services
             {
                 _logger.LogWarning($"Rescan check failed: {ex.Message} (faucet may have no UTXOs until next block)");
             }
+        }
+
+        public async Task<List<UtxoData>> ListWalletUnspentAsync(int maxCount = 1000, long? maximumAmountSats = null, int minConfirmations = 1)
+        {
+            _logger.LogInformation($"Fetching up to {maxCount} wallet UTXOs via Bitcoin Core RPC");
+
+            var queryOptions = new Dictionary<string, object>
+            {
+                { "maximumCount", maxCount }
+            };
+
+            if (maximumAmountSats.HasValue)
+            {
+                queryOptions["maximumAmount"] = maximumAmountSats.Value / 100_000_000m;
+            }
+
+            var result = await RpcCallAsync("listunspent", new object?[]
+            {
+                minConfirmations,
+                9999999,
+                Array.Empty<string>(),
+                true,
+                queryOptions
+            });
+
+            var utxos = new List<UtxoData>();
+
+            if (result.ValueKind != JsonValueKind.Array)
+            {
+                return utxos;
+            }
+
+            foreach (var utxo in result.EnumerateArray())
+            {
+                var txid = utxo.GetProperty("txid").GetString()!;
+                var vout = utxo.GetProperty("vout").GetInt32();
+                var amountBtc = utxo.GetProperty("amount").GetDecimal();
+                var valueSats = (long)(amountBtc * 100_000_000m);
+                var confirmations = utxo.GetProperty("confirmations").GetInt32();
+                var address = utxo.TryGetProperty("address", out var addressValue)
+                    ? addressValue.GetString() ?? string.Empty
+                    : string.Empty;
+                var scriptHex = utxo.TryGetProperty("scriptPubKey", out var scriptValue)
+                    ? scriptValue.GetString() ?? string.Empty
+                    : string.Empty;
+
+                utxos.Add(new UtxoData
+                {
+                    address = address,
+                    scriptHex = scriptHex,
+                    outpoint = new Outpoint(txid, vout),
+                    value = valueSats,
+                    blockIndex = confirmations > 0 ? 1 : 0,
+                    PendingSpent = false
+                });
+            }
+
+            _logger.LogInformation($"ListWalletUnspentAsync: found {utxos.Count} wallet UTXOs");
+            return utxos;
         }
     }
 }
