@@ -7,13 +7,13 @@ services:
   chain:
     container_name: tbtc-chain
     build: .
-    mem_limit: 2048m
+    mem_limit: 3072m
     cpus: 0.8
     healthcheck:
       test: ["CMD", "bitcoin-cli", "ping"]
       interval: 10s
       retries: 5
-      start_period: 5s
+      start_period: 180s
       timeout: 10s
     restart: unless-stopped
     stop_grace_period: 15m

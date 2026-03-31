@@ -13,9 +13,9 @@ rpcpassword=$RPCPASSWORD"
 fi
 
 echo "txindex=1
+dbcache=450
 blockfilterindex=1
 peerblockfilters=1
-coinstatsindex=1
 dnsseed=0
 persistmempool=1
 uacomment=$UACOMMENT"
