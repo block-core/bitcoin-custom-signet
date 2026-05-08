@@ -1,0 +1,39 @@
+services:
+  faucet-api:
+    container_name: faucet-api
+    image: faucet-api_faucet-api:latest
+    mem_limit: 1024m
+    cpus: 0.200
+    environment:
+      ASPNETCORE_URLS: http://+:5500
+      ASPNETCORE_ENVIRONMENT: Development
+      Logging__LogLevel__Default: Debug
+      Bitcoin__Mnemonic: margin radio diamond leg loud street announce guitar video shiver speed eyebrow
+      Bitcoin__Network: TestNet
+      Bitcoin__FeeRate: 10001
+      Bitcoin__ChangeAddressIndex: 0
+      Bitcoin__RpcUrl: http://angornet-btc-node:38332
+      Bitcoin__RpcUser: rpcuser
+      Bitcoin__RpcPassword: rpcpassword
+      Bitcoin__RpcWallet: faucet_wallet
+    restart: unless-stopped
+    ports:
+      - 5500:5500
+    networks:
+      - angornet-network
+
+  testnet-dashboard:
+    container_name: testnet-dashboard
+    image: nginx:alpine
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    ports:
+      - 8085:80
+    networks:
+      - angornet-network
+
+networks:
+  angornet-network:
+    external: true

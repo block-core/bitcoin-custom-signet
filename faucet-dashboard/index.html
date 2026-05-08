@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angor Testnet</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #f7931a;
+    --accent-hover: #ffa940;
+    --green: #3fb950;
+    --red: #f85149;
+    --blue: #58a6ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h1 .btc { color: var(--accent); }
+  .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+
+  /* Network status */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+  .status-dot.online { background: var(--green); }
+  .status-dot.offline { background: var(--red); }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* Faucet form */
+  .form-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .form-row input[type="text"] {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .form-row input[type="text"]:focus { border-color: var(--accent); }
+  .form-row input[type="text"]::placeholder { color: #484f58; }
+  .amount-input {
+    width: 90px !important;
+    flex: none !important;
+    text-align: right;
+  }
+  .btn {
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--muted); background: rgba(255,255,255,0.04); }
+  .result {
+    font-size: 0.85rem;
+    padding: 0.5rem 0;
+    min-height: 1.5rem;
+  }
+  .result.success { color: var(--green); }
+  .result.error { color: var(--red); }
+  .result a { color: var(--blue); text-decoration: none; }
+  .result a:hover { text-decoration: underline; }
+
+  /* Services grid */
+  .services { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  @media (max-width: 500px) { .services { grid-template-columns: 1fr; } }
+  .service-link {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .service-link:hover { border-color: var(--accent); background: rgba(247,147,26,0.04); }
+  .service-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .service-desc { font-size: 0.8rem; color: var(--muted); }
+  .service-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    background: rgba(247,147,26,0.15);
+    color: var(--accent);
+    margin-top: 0.5rem;
+    font-family: monospace;
+    align-self: flex-start;
+  }
+
+  /* Info */
+  .info-table { width: 100%; font-size: 0.85rem; }
+  .info-table td { padding: 0.3rem 0; }
+  .info-table td:first-child { color: var(--muted); white-space: nowrap; padding-right: 1rem; }
+  .info-table td:last-child { word-break: break-all; font-family: monospace; font-size: 0.8rem; }
+
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: #484f58;
+    font-size: 0.8rem;
+  }
+  .footer a { color: var(--muted); text-decoration: none; }
+  .footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1><span class="btc">&#x20BF;</span> Angor Testnet</h1>
+  <p class="subtitle">Custom signet faucet &amp; lightning tools for testers</p>
+
+  <!-- Network status -->
+  <div class="status-bar" id="statusBar">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">Checking network...</span>
+  </div>
+
+  <!-- Faucet -->
+  <div class="card">
+    <h2>Faucet</h2>
+    <div class="form-row">
+      <input type="text" id="address" placeholder="tb1q... address" autocomplete="off" spellcheck="false">
+      <input type="text" id="amount" class="amount-input" value="1" placeholder="BTC">
+      <button class="btn btn-primary" id="sendBtn" onclick="sendCoins()">Send</button>
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <!-- Services -->
+  <div class="card">
+    <h2>Lightning &amp; Tools</h2>
+    <div class="services">
+      <a class="service-link" href="https://test.thub1.angor.io" target="_blank">
+        <span class="service-name">ThunderHub 1 (LND-1)</span>
+        <span class="service-desc">Lightning node management</span>
+        <span class="service-badge">password: 123</span>
+      </a>
+      <a class="service-link" href="https://test.thub2.angor.io" target="_blank">
+        <span class="service-name">ThunderHub 2 (LND-2)</span>
+        <span class="service-desc">Lightning node management</span>
+        <span class="service-badge">password: 123</span>
+      </a>
+      <a class="service-link" href="https://test.boltz.angor.io" target="_blank">
+        <span class="service-name">Boltz Exchange</span>
+        <span class="service-desc">Submarine swaps (on-chain &harr; lightning)</span>
+      </a>
+      <a class="service-link" href="https://test.indexer.angor.io" target="_blank">
+        <span class="service-name">Block Explorer</span>
+        <span class="service-desc">Mempool-style explorer</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Network info -->
+  <div class="card">
+    <h2>Network Info</h2>
+    <table class="info-table">
+      <tr><td>Chain</td><td id="infoChain">-</td></tr>
+      <tr><td>Block height</td><td id="infoHeight">-</td></tr>
+      <tr><td>Last block</td><td id="infoBlockTime">-</td></tr>
+      <tr><td>Indexer API</td><td><a href="https://tbtc.indexer.angor.io" target="_blank">tbtc.indexer.angor.io</a></td></tr>
+      <tr><td>Faucet API</td><td><a href="https://test.faucet.angor.io/api/faucet/network/status" target="_blank">test.faucet.angor.io</a></td></tr>
+    </table>
+  </div>
+
+  <div class="footer">
+    <a href="https://github.com/block-core/bitcoin-custom-signet" target="_blank">bitcoin-custom-signet</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://angor.io" target="_blank">angor.io</a>
+  </div>
+</div>
+
+<script>
+const FAUCET_API = '/api/faucet';
+
+async function checkStatus() {
+  try {
+    const res = await fetch(FAUCET_API + '/network/status');
+    const data = await res.json();
+    const dot = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    dot.className = 'status-dot ' + (data.isOnline ? 'online' : 'offline');
+    text.textContent = data.isOnline
+      ? `Online \u2022 Block ${data.height.toLocaleString()} \u2022 ${Math.round(data.lastBlockAgeMins)}m ago`
+      : `Offline \u2022 Last block ${Math.round(data.lastBlockAgeMins)}m ago`;
+    document.getElementById('infoChain').textContent = data.chain || '-';
+    document.getElementById('infoHeight').textContent = data.height ? data.height.toLocaleString() : '-';
+    document.getElementById('infoBlockTime').textContent = data.lastBlockTime
+      ? new Date(data.lastBlockTime).toLocaleString()
+      : '-';
+  } catch {
+    document.getElementById('statusDot').className = 'status-dot offline';
+    document.getElementById('statusText').textContent = 'Cannot reach faucet API';
+  }
+}
+
+async function sendCoins() {
+  const address = document.getElementById('address').value.trim();
+  const amount = document.getElementById('amount').value.trim() || '1';
+  const result = document.getElementById('result');
+  const btn = document.getElementById('sendBtn');
+
+  if (!address) {
+    result.className = 'result error';
+    result.textContent = 'Enter a Bitcoin address';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  result.className = 'result';
+  result.textContent = '';
+
+  try {
+    const res = await fetch(FAUCET_API + '/send/' + encodeURIComponent(address) + '/' + encodeURIComponent(amount));
+    const text = await res.text();
+
+    if (res.ok) {
+      let data;
+      try { data = JSON.parse(text); } catch { data = null; }
+      result.className = 'result success';
+      if (data && data.transactionId) {
+        result.innerHTML = 'Sent! TX: <a href="https://test.indexer.angor.io/tx/' + data.transactionId + '" target="_blank">' + data.transactionId.substring(0, 16) + '...</a>';
+      } else {
+        result.textContent = 'Sent! ' + text;
+      }
+    } else {
+      result.className = 'result error';
+      result.textContent = text || 'Request failed (' + res.status + ')';
+    }
+  } catch (e) {
+    result.className = 'result error';
+    result.textContent = 'Network error: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send';
+  }
+}
+
+document.getElementById('address').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendCoins();
+});
+
+checkStatus();
+setInterval(checkStatus, 30000);
+</script>
+</body>
+</html>
