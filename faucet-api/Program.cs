@@ -8,12 +8,14 @@ builder.Configuration.AddCommandLine(args);
 builder.Services.Configure<BitcoinSettings>(builder.Configuration.GetSection("Bitcoin"));
 
 builder.Services.AddControllers();
+builder.Services.AddSingleton<IUtxoReservationService, UtxoReservationService>();
 
 builder.Services.AddHttpClient<IBitcoinRpcService, BitcoinRpcService>(client =>
 {
     // Generous timeout to accommodate rescanblockchain on startup
     client.Timeout = TimeSpan.FromMinutes(30);
 });
+builder.Services.AddHostedService<UtxoConsolidationService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
